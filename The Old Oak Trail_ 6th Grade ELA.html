@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Old Oak Trail: 6th Grade ELA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EFEAFF; --card:#FFFFFF; --ink:#1D1A3A; --muted:#51507A; --edge:#1D1A3A; --navy:#1D1A3A;
+  --c1:#7ED957; --c2:#4DB6FF; --c3:#FF7A7A; --c4:#B496FF; --c5:#FFC83D; --c6:#3DD6C3; --c7:#FF9F43; --c8:#FF8FC7;
+  --btn:#6B3FD6; --btn-ink:#FFFFFF; --btn-low:#3E2090;
+  --ok:#0E7A3B; --okbg:#C8F5D3; --bad:#B3261E; --badbg:#FFD9D6; --sel:#FFF3B8; --chip:#F7F4FF; --line:#CFC6F5;
+  --hard:5px 5px 0 var(--edge);
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#14122B; --card:#221F47; --ink:#F1EEFF; --muted:#B7B3E0; --edge:#8A83D9;
+    --btn:#8F6BFF; --btn-ink:#10092B; --btn-low:#5A3DB8;
+    --ok:#8CF0B0; --okbg:#1E4D33; --bad:#FF9C94; --badbg:#5A2323; --sel:#4D4318; --chip:#2B2858; --line:#3F3A78;
+    --hard:5px 5px 0 #0A0818; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14122B; --card:#221F47; --ink:#F1EEFF; --muted:#B7B3E0; --edge:#8A83D9;
+  --btn:#8F6BFF; --btn-ink:#10092B; --btn-low:#5A3DB8;
+  --ok:#8CF0B0; --okbg:#1E4D33; --bad:#FF9C94; --badbg:#5A2323; --sel:#4D4318; --chip:#2B2858; --line:#3F3A78;
+  --hard:5px 5px 0 #0A0818; color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);
+  background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--edge) 14%,transparent) 1.5px,transparent 0);background-size:26px 26px;
+  font-family:"Atkinson Hyperlegible","Trebuchet MS",Verdana,system-ui,sans-serif;font-size:19px;line-height:1.5}
+h1,h2,h3{font-family:Fredoka,"Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;font-weight:600;line-height:1.15;margin:0}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:4px solid var(--c5);outline-offset:2px;box-shadow:0 0 0 7px var(--navy)}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+
+/* top bar + rainbow progress */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--navy);color:#fff}
+.top .wrap{display:flex;align-items:center;gap:10px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.brand{font-family:Fredoka,"Trebuchet MS",sans-serif;font-weight:600;font-size:1.3rem;margin-right:auto}
+.pill{background:rgba(255,255,255,.16);border-radius:999px;padding:4px 12px;font-size:.92rem;white-space:nowrap}
+.pill select{background:transparent;border:0;color:inherit;font-weight:700}
+.pill select option{color:#1D1A3A}
+.pill.xp{background:var(--c5);color:#1D1A3A;font-weight:700}
+#saved{font-size:.85rem}
+.prog{height:8px;background:rgba(255,255,255,.2)}
+#progfill{height:100%;width:0;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5));transition:width .5s}
+
+/* trail */
+.trail{display:flex;gap:8px;overflow-x:auto;padding:16px 4px 10px;list-style:none;margin:0}
+.trail li{flex:1 0 auto}
+.stop{width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px;padding:8px 6px;background:var(--tc,var(--card));color:#1D1A3A;
+  border:3px solid var(--edge);border-radius:16px;font-size:.84rem;font-weight:700;opacity:.78}
+.stop .ic{font-size:1.5rem;line-height:1}
+.stop.here{opacity:1;transform:translateY(-3px);box-shadow:0 5px 0 var(--edge)}
+.stop.done .ic::after{content:" ✓";font-size:.95rem}
+.stop:disabled{opacity:.4;cursor:default}
+
+/* cards */
+main{padding-bottom:120px}
+.card{background:var(--card);border:3px solid var(--edge);border-radius:22px;padding:18px;margin:18px 0;box-shadow:var(--hard)}
+.banner{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:var(--tc,var(--c5));color:#1D1A3A;border:3px solid var(--edge);border-radius:24px;padding:14px 18px;margin-top:14px;box-shadow:var(--hard)}
+.banner h2{font-size:1.75rem}
+.bigic{font-size:2.8rem;line-height:1}
+.time{background:#fff;color:#1D1A3A;border:2px solid #1D1A3A;border-radius:999px;padding:2px 12px;font-size:.9rem;font-weight:700;margin-left:auto}
+.lead{display:flex;gap:10px;align-items:flex-start}
+.lead p{margin:0;flex:1}
+.hp{background:var(--sel);border:2px dashed var(--edge);border-radius:14px;padding:8px 12px;font-size:.95rem;margin:12px 0 0}
+
+.spk{flex:none;width:46px;height:46px;border-radius:50%;border:3px solid var(--edge);background:var(--c5);color:#1D1A3A;font-size:1.15rem;line-height:1;display:inline-grid;place-items:center;padding:0;box-shadow:0 3px 0 var(--edge)}
+.spk:active{transform:translateY(3px);box-shadow:none}
+.spk.reading{background:var(--c1);animation:pulse 1s infinite}
+.spk.sm{width:38px;height:38px;font-size:1rem}
+@keyframes pulse{50%{box-shadow:0 3px 0 var(--edge),0 0 0 7px color-mix(in srgb,var(--c1) 45%,transparent)}}
+body.nospeech .spk{display:none}
+
+.q{border-top:3px dotted var(--line);padding-top:16px;margin-top:16px}
+.q:first-child{border-top:0;margin-top:0;padding-top:0}
+.qhead{display:flex;gap:10px;align-items:flex-start}
+.qtext{margin:0;flex:1;font-weight:700}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;background:var(--tc,var(--c2));color:#1D1A3A;border:2px solid var(--edge);border-radius:999px;padding:0 10px;margin-right:8px}
+.opts{display:grid;gap:10px;margin-top:12px}
+.orow{display:flex;gap:8px;align-items:stretch}
+.opt{flex:1;text-align:left;min-height:54px;padding:10px 16px;border:3px solid var(--edge);border-radius:16px;background:var(--card);box-shadow:0 4px 0 var(--edge);transition:transform .08s}
+.opt:hover:not(:disabled){background:var(--sel)}
+.opt:active:not(:disabled){transform:translateY(4px);box-shadow:none}
+.opt.right{background:var(--okbg);border-color:var(--ok);box-shadow:0 4px 0 var(--ok)}
+.opt.on{background:var(--c5);color:#1D1A3A}
+.opt.wrong{background:var(--badbg);border-color:var(--bad);box-shadow:0 4px 0 var(--bad)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.fb{display:flex;gap:10px;align-items:flex-start;margin-top:12px;border-radius:16px;padding:10px 14px;border:3px solid}
+.fb p{margin:0;flex:1}
+.fb.ok{background:var(--okbg);border-color:var(--ok)} .fb.no{background:var(--badbg);border-color:var(--bad)}
+.cheer{font-family:Fredoka,sans-serif;font-weight:600;font-size:1.15rem;margin-right:6px}
+
+/* poem / ads / ref */
+.poem{border-left:8px solid var(--c2);padding:4px 0 4px 16px;font-style:italic;font-size:1.14rem;background:linear-gradient(90deg,color-mix(in srgb,var(--c2) 14%,transparent),transparent)}
+.stanza{display:flex;gap:10px;align-items:flex-start;margin:10px 0}
+.stanza p{margin:0;flex:1}
+.ptitle{font-family:Fredoka,sans-serif;font-weight:600;font-size:1.4rem}
+.adgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin:18px 0}
+.ad{border:3px solid var(--edge);border-radius:20px;padding:14px;box-shadow:var(--hard);color:#1D1A3A}
+.ad:nth-child(1){background:#FFE29A} .ad:nth-child(2){background:#BFE6FF}
+.ad h3{font-size:1.1rem}
+.ad p{margin:0 0 6px}
+.reftable{width:100%;border-collapse:collapse}
+.reftable td,.reftable th{padding:6px 8px;border-bottom:2px solid var(--line);text-align:left}
+.reftable th{font-size:.85rem;color:var(--muted)}
+.reftable td:first-child{font-weight:700;font-family:Fredoka,sans-serif;font-size:1.1rem}
+
+/* drag */
+.pool,.zone{border:3px dashed var(--edge);border-radius:18px;padding:10px;min-height:68px}
+.pool{background:var(--chip);display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.zones{display:grid;gap:12px;margin-top:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.zone{background:var(--card)}
+.zone .zlabel{display:flex;gap:8px;align-items:center;font-weight:700;font-size:.95rem;margin-bottom:8px}
+.zone .zlabel span{flex:1}
+.zdrop{display:flex;flex-direction:column;gap:8px;min-height:52px}
+.zone.hot,.pool.hot{border-style:solid;background:var(--sel);transform:scale(1.01)}
+.chip{display:flex;align-items:center;gap:6px;background:var(--tc,var(--c5));color:#1D1A3A;border:3px solid var(--edge);border-radius:14px;padding:6px 6px 6px 12px;
+  touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab;font-size:.98rem;font-weight:700;box-shadow:0 4px 0 var(--edge)}
+.chip span{flex:1}
+.chip .spk{box-shadow:none;background:#fff}
+.chip.sel{outline:4px solid #fff;box-shadow:0 0 0 7px var(--navy);transform:translateY(-3px) rotate(-1deg)}
+.chip.dragging{opacity:.3}
+.chip.ok{background:var(--okbg);border-color:var(--ok);color:var(--ink)}
+.chip.bad{background:var(--badbg);border-color:var(--bad);color:var(--ink)}
+.ghost{position:fixed;z-index:999;pointer-events:none;transform:translate(-50%,-50%) rotate(-4deg) scale(1.05);box-shadow:0 12px 24px rgba(0,0,0,.35);max-width:80vw}
+.hintline{font-size:.92rem;color:var(--muted);margin:8px 0 0}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.btn{min-height:54px;padding:8px 22px;border-radius:16px;border:3px solid var(--edge);background:var(--btn);color:var(--btn-ink);font-weight:700;box-shadow:0 5px 0 var(--btn-low);transition:transform .08s}
+.btn:active:not(:disabled){transform:translateY(5px);box-shadow:none}
+.btn.alt{background:var(--card);color:var(--ink);box-shadow:0 5px 0 var(--edge)}
+.btn:disabled{opacity:.45;cursor:default}
+.result{font-weight:700}
+
+/* write */
+.field{margin-top:14px}
+.field label{display:flex;gap:10px;align-items:flex-start;font-weight:700}
+.field label span{flex:1}
+textarea,input[type=text]{width:100%;margin-top:6px;padding:10px 14px;border:3px solid var(--edge);border-radius:16px;background:var(--chip);resize:vertical}
+textarea:focus,input[type=text]:focus{background:var(--card);outline:4px solid var(--c2);outline-offset:0}
+.count{font-size:.85rem;color:var(--muted);text-align:right}
+.badge{display:inline-block;background:var(--c3);color:#1D1A3A;border:2px solid var(--edge);border-radius:999px;padding:0 10px;font-size:.78rem;font-weight:700;margin-right:8px}
+.rate{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.rate button{min-width:64px;min-height:58px;border-radius:16px;border:3px solid var(--edge);background:var(--card);font-weight:700;box-shadow:0 4px 0 var(--edge)}
+.rate button.on{background:var(--c5);color:#1D1A3A}
+
+/* bottom nav */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:3px solid var(--edge);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px))}
+.bar .wrap{display:flex;gap:12px;justify-content:space-between}
+
+/* start / results */
+.hero{margin-top:14px;background:var(--c4);color:#1D1A3A;border:3px solid var(--edge);border-radius:28px;padding:22px 22px 24px;box-shadow:var(--hard)}
+.hero h1{font-size:2.6rem}
+.hero .emo{font-size:2.2rem;letter-spacing:.15em}
+.hero p{max-width:58ch;margin:8px 0 0}
+.big{font-family:Fredoka,sans-serif;font-size:3.4rem;line-height:1}
+.rank{font-family:Fredoka,sans-serif;font-size:1.5rem;font-weight:600}
+.medals{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.medal{display:flex;align-items:center;gap:6px;border:3px solid var(--edge);border-radius:999px;padding:4px 14px 4px 8px;font-weight:700;color:#1D1A3A;box-shadow:0 3px 0 var(--edge)}
+.medal.off{background:var(--chip);color:var(--muted);border-style:dashed;box-shadow:none}
+.rtable{width:100%;border-collapse:collapse;margin-top:10px}
+.rtable td{padding:8px;border-bottom:2px solid var(--line)}
+.rtable td:last-child{text-align:right;font-weight:700}
+.answer{white-space:pre-wrap;background:var(--chip);border:2px solid var(--line);border-radius:12px;padding:8px 10px;margin:4px 0 10px}
+
+/* confetti */
+.confetti{position:fixed;z-index:1000;pointer-events:none;width:10px;height:14px;border-radius:2px;animation:fall 1.1s ease-out forwards}
+@keyframes fall{0%{transform:translate(0,0) rotate(0);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}}
+@media (prefers-reduced-motion:reduce){.spk.reading{animation:none}.confetti{display:none}#progfill{transition:none}.opt,.btn{transition:none}}
+
+/* bonus rounds */
+.gstats{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0 6px;font-weight:700;align-items:center}
+.gstats b{font-family:Fredoka,sans-serif;font-size:1.5rem}
+.garea{min-height:180px;border:3px dashed var(--edge);border-radius:20px;padding:14px;background:var(--chip);margin-top:8px}
+.gprompt{display:flex;gap:10px;align-items:center;margin-bottom:14px;font-weight:700}
+.gprompt span{flex:1}
+.bubbles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px}
+.bubble{min-height:88px;padding:10px 14px;border:3px solid var(--edge);border-radius:40px;font-weight:700;color:#1D1A3A;box-shadow:0 5px 0 var(--edge);animation:bob 3s ease-in-out infinite}
+.bubble.b0{background:var(--c1)} .bubble.b1{background:var(--c2)} .bubble.b2{background:var(--c3)} .bubble.b3{background:var(--c4)} .bubble.b4{background:var(--c5)}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.bubble.popped{animation:pop .3s forwards;pointer-events:none}
+@keyframes pop{to{transform:scale(1.5);opacity:0}}
+.bubble.miss{background:var(--badbg);color:var(--ink);animation:none;opacity:.6;box-shadow:none}
+.gcard{background:var(--card);border:3px solid var(--edge);border-radius:22px;box-shadow:var(--hard);padding:20px;font-size:1.3rem;font-weight:700;text-align:center;min-height:120px;display:flex;align-items:center;gap:10px;justify-content:center}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:16px}
+.choices button{min-height:62px;border:3px solid var(--edge);border-radius:16px;font-weight:700;color:#1D1A3A;box-shadow:0 4px 0 var(--edge)}
+.choices .c0{background:var(--c1)} .choices .c1{background:var(--c2)} .choices .c2{background:var(--c3)} .choices .c3{background:var(--c5)}
+.choices button:active{transform:translateY(4px);box-shadow:none}
+.choices .rightc{outline:5px solid var(--ok)} .choices .wrongc{outline:5px solid var(--bad);opacity:.7}
+.gfb{min-height:32px;margin-top:12px;font-weight:700}
+.boss{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.bossic{font-size:2.8rem;line-height:1}
+.hpbar{height:18px;border:3px solid var(--edge);border-radius:999px;background:var(--card);overflow:hidden;margin-top:4px}
+.hpbar div{height:100%;background:var(--c3);transition:width .4s}
+.mem{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.mcard{min-height:100px;border:3px solid var(--edge);border-radius:16px;padding:8px;font-weight:700;font-size:.95rem;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--c4);color:#1D1A3A;box-shadow:0 4px 0 var(--edge);text-align:center}
+button.mcard{font-family:Fredoka,sans-serif;font-size:2rem}
+.mcard.up{background:var(--card);color:var(--ink)}
+.mcard.done{background:var(--okbg);color:var(--ink);border-color:var(--ok);box-shadow:none}
+.mcard span{flex:1}
+.slots{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.slot{width:46px;height:58px;border:3px solid var(--edge);border-radius:12px;background:var(--card);display:grid;place-items:center;font-family:Fredoka,sans-serif;font-size:1.7rem;font-weight:600}
+.tiles{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tile{width:54px;height:62px;border:3px solid var(--edge);border-radius:12px;background:var(--c5);color:#1D1A3A;font-family:Fredoka,sans-serif;font-size:1.7rem;font-weight:600;box-shadow:0 4px 0 var(--edge)}
+.tile:active:not(:disabled){transform:translateY(4px);box-shadow:none}
+.tile:disabled{opacity:.25}
+.gend{text-align:center;padding:10px}
+.btn.go{background:var(--c1);color:#1D1A3A;box-shadow:0 5px 0 var(--edge)}
+.brow td:first-child{font-weight:700}
+@media (prefers-reduced-motion:reduce){.bubble{animation:none}.hpbar div{transition:none}}
+
+/* front page animation */
+.hero.front{position:relative;overflow:hidden;padding-bottom:44px}
+.hero.front>*:not(.leaf):not(.runner){position:relative;z-index:1}
+.leaf{position:absolute;top:-12%;font-size:1.7rem;pointer-events:none;animation:leaf 9s linear infinite}
+@keyframes leaf{0%{top:-14%;transform:translateX(0) rotate(0)}50%{transform:translateX(30px) rotate(200deg)}100%{top:108%;transform:translateX(-12px) rotate(380deg)}}
+.runner{position:absolute;bottom:6px;font-size:1.9rem;pointer-events:none;animation:run 11s linear infinite,hop .5s ease-in-out infinite}
+@keyframes run{from{left:106%}to{left:-12%}}
+@keyframes hop{50%{margin-bottom:10px}}
+.ttl .w{display:inline-block;white-space:nowrap;margin-right:.28em}
+.ttl .l{display:inline-block;animation:popin .7s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes popin{from{transform:translateY(34px) scale(.3) rotate(-14deg);opacity:0}to{transform:none;opacity:1}}
+.emo span{display:inline-block;margin-right:.3em;animation:bounce 1.7s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px) rotate(8deg)}}
+.btn.pulse{animation:pulse2 1.9s ease-in-out infinite}
+@keyframes pulse2{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.leaf,.runner{display:none}.ttl .l,.emo span,.btn.pulse{animation:none}}
+@media print{
+  .top,.bar,.trail,.noprint,.spk{display:none !important}
+  body{background:#fff;color:#000;font-size:14px}
+  .card,.hero,.banner{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">🌳 The Old Oak Trail</div>
+    <label class="pill" id="ratepill">🔊 Speed
+      <select id="rate" aria-label="Reading speed">
+        <option value="0.7">Slow</option>
+        <option value="0.9" selected>Normal</option>
+        <option value="1.1">Fast</option>
+      </select>
+    </label>
+    <div class="pill xp" id="xp" hidden>⭐ <span id="xpn">0</span> XP</div>
+    <div class="pill" id="saved" hidden>💾 Saved</div>
+  </div>
+  <div class="prog"><div id="progfill"></div></div>
+</header>
+<div class="wrap">
+  <ol class="trail" id="trail" aria-label="Your trail"></ol>
+  <main id="stage" aria-live="polite"></main>
+</div>
+<nav class="bar noprint" id="bar" hidden>
+  <div class="wrap">
+    <button class="btn alt" data-act="back" id="backBtn">Back</button>
+    <button class="btn" data-act="next" id="nextBtn">Next</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+"use strict";
+var KEY="oakTrail-v1";
+
+/* ---------- helpers ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
+function spk(text,cls){return '<button type="button" class="spk '+(cls||'')+'" data-say="'+esc(text)+'" aria-label="Read aloud">🔊</button>';}
+function words(s){var t=(s||"").trim();return t?t.split(/\s+/).length:0;}
+
+/* ---------- state ---------- */
+var S=load()||{name:"",period:"",started:0,task:-1,items:{},writes:{}};
+var lsOK=true,idb=null;
+function load(){try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;}}
+function save(){
+  S.ts=Date.now();
+  var okLS=true;
+  try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){okLS=false;}
+  lsOK=okLS;
+  idbSave();
+  showSaved();
+}
+function showSaved(){
+  var el=$("#saved");if(!el)return;
+  if(lsOK||idb){el.textContent="💾 Saved";}
+  else{el.textContent="⚠️ Not saving. Screenshot your work.";}
+}
+function idbSave(){
+  if(!idb)return;
+  try{idb.transaction("s","readwrite").objectStore("s").put(JSON.stringify(S),KEY);}catch(e){}
+}
+function bootStorage(){
+  /* second copy of the work in IndexedDB; if it is newer than the first copy, use it */
+  try{
+    var r=indexedDB.open("oakTrail",1);
+    r.onupgradeneeded=function(){r.result.createObjectStore("s");};
+    r.onsuccess=function(){
+      idb=r.result;
+      try{
+        var g=idb.transaction("s","readonly").objectStore("s").get(KEY);
+        g.onsuccess=function(){
+          var other=null;try{other=g.result?JSON.parse(g.result):null;}catch(e){}
+          if(other&&(other.ts||0)>(S.ts||0)){S=other;render(true);}
+          else{idbSave();}
+          showSaved();
+        };
+      }catch(e){}
+    };
+  }catch(e){}
+  window.addEventListener("pagehide",function(){save();});
+  document.addEventListener("visibilitychange",function(){if(document.hidden)save();});
+}
+
+/* ---------- content ---------- */
+var POEM={title:"The Old Oak",stanzas:[
+  ["The old oak stands at the end of our street,","a patient giant in a coat of bark.","Its branches reach like open hands","to catch the last light before dark."],
+  ["Storms have shouted through its leaves;","the winter wind has tried to pry","each stubborn root from the stone-cold ground.","The oak just whispers, \"Not today.\""],
+  ["Now I am the one who trembles:","new school, new halls, no friend in sight.","But I press my back against the bark","and borrow a little of its might."]
+]};
+var ADS=[
+  {h:"Ad A: Brightside Backpacks",t:"Don't let your child start the school year with a broken strap. Brightside Backpacks are tested to carry 40 pounds, come with a 5-year guarantee, and are chosen by the National Teachers Association. Give your kid a bag they can count on."},
+  {h:"Ad B: Paws Haven Animal Shelter",t:"Every night, Daisy waits by the door of her kennel, hoping tonight is the night someone takes her home. Three out of four dogs at our shelter are adopted within 30 days when families visit in person. Our licensed veterinarians have cared for local animals for 20 years. Please come meet her."}
+];
+
+var PASSAGES={
+  bee:{title:"The Honeybee's Dance",paras:[
+    "When a honeybee finds a field of flowers, she does not keep the secret. She flies back to the hive and performs a short dance on the wall of the honeycomb.",
+    "The dance is a code. If she waggles in a straight line while moving up the comb, the flowers are toward the sun. The longer she waggles, the farther away the flowers are.",
+    "Other bees crowd around to feel the dance. Within minutes, they fly out and head straight for the flowers, even though they have never seen them.",
+    "Scientists once thought animals could not share complex directions. The honeybee's dance shows that even a tiny insect can teach others where to find food."]},
+  scene:{title:"The Last Bell",paras:[
+    "Marcus slid his chair back before the final bell had finished ringing. His backpack was already zipped, and his jacket hung over one arm even though the afternoon sun was warm.",
+    "\"Marcus,\" Ms. Ortiz called, \"what about your science project?\"",
+    "He chewed the end of his pencil. Then, very slowly, he smoothed a crumpled paper flat on his desk. \"It's only half done,\" he mumbled, \"but it's better than nothing.\""]}
+};
+PASSAGES.scientist={title:"A Day in the Life of a Field Scientist",paras:[
+    "Dr. Lena Park wakes at 4:30 a.m., long before the sun. By 5:15 she is hiking along a muddy riverbank with a thermos, binoculars, and a waterproof notebook. She studies a family of wild river otters, and the otters do not care about her schedule.",
+    "Most days, almost nothing happens. Lena sits perfectly still for hours, writing down what she sees: where the otters swim, what they eat, how they greet each other. A good scientist records everything, even the boring parts, because a pattern can hide in the smallest detail.",
+    "Patience is only part of the job. Lena also follows strict rules. She stays far enough away that the otters never change their behavior because of her. If they notice her, her notes would no longer show how wild otters really live.",
+    "Last spring, Lena noticed something surprising. A young otter kept dropping a stone onto a clam shell, then diving to grab the stone again. Lena wrote it down. The next week she saw it again. By the end of the month she had pages of notes and one big question: was it a game, or was it a tool?",
+    "Back at her cabin, Lena types her notes into a computer and compares them with last year's. Sometimes her idea turns out to be wrong, and she has to start over. She says that is the best part of science, because a wrong answer still teaches you something."]};
+var TASKS=[
+ {id:1,key:"roots",icon:"🌱",short:"Roots",title:"Word Roots",
+  intro:"Greek and Latin roots help you figure out new words. Look at the root list, then match, choose, and decide.",
+  blocks:[
+   {type:"ref",title:"Root list",head:["Root","Meaning","Language"],rows:[["spect","to look","Latin"],["port","to carry","Latin"],["dict","to say","Latin"],["graph","to write","Greek"],["bio","life","Greek"]]},
+   {type:"drag",id:"t1d",cap:1,prompt:"Drag each word onto the meaning that matches its root.",
+    zones:[{id:"a",label:"spect: to look closely"},{id:"b",label:"port: to move by carrying"},{id:"c",label:"dict: to say ahead of time"},{id:"d",label:"bio + graph: the story of a life"}],
+    chips:[{id:"c1",text:"inspect",zone:"a"},{id:"c2",text:"transport",zone:"b"},{id:"c3",text:"predict",zone:"c"},{id:"c4",text:"biography",zone:"d"}]},
+   {type:"mc",id:"t1m1",kind:"Multiple choice",q:"The word spectator has the root spect. What does a spectator most likely do?",opts:["Watches an event","Carries equipment","Writes a story","Predicts the weather"],ans:0,why:"Spect means to look, so a spectator is someone who looks on."},
+   {type:"mc",id:"t1m2",kind:"Multiple choice",q:"A portable speaker is easy to what?",opts:["Carry","Look at","Write on","Say aloud"],ans:0,why:"Port means to carry, and able means can be done. Portable means able to be carried."},
+   {type:"mc",id:"t1t1",kind:"True or false",q:"The root bio comes from Greek and means life.",opts:["True","False"],ans:0,why:"Bio is Greek for life, as in biology."},
+   {type:"mc",id:"t1t2",kind:"True or false",q:"The word dictate has the root graph.",opts:["True","False"],ans:1,why:"Dictate comes from dict, which means to say. Graph means to write."},
+   {type:"write",id:"t1w",challenge:true,prompt:"Challenge: Invent a brand-new word that uses one root from the list. Tell what it means and use it in a sentence.",
+    fields:[{id:"t1w1",label:"My new word",rows:1},{id:"t1w2",label:"What it means",rows:2},{id:"t1w3",label:"A sentence that shows its meaning",rows:3}]}
+  ]},
+ {id:2,key:"poem",icon:"🌳",short:"Poem",title:"Poetry Close Read",
+  intro:"Read the poem once just to enjoy it. Read it again and think about the pictures the words make. You can press the speaker to hear it.",
+  blocks:[
+   {type:"poem"},
+   {type:"drag",id:"t2d",cap:99,prompt:"Drag each line from the poem to the best label.",
+    zones:[{id:"s",label:"Simile: compares using like or as"},{id:"m",label:"Metaphor: says one thing IS another"},{id:"p",label:"Personification: gives human actions to a non-human"}],
+    chips:[{id:"c1",text:"Its branches reach like open hands",zone:"s"},{id:"c2",text:"a patient giant in a coat of bark",zone:"m"},{id:"c3",text:"Storms have shouted through its leaves",zone:"p"},{id:"c4",text:"The oak just whispers, \"Not today.\"",zone:"p"}]},
+   {type:"mc",id:"t2t1",kind:"True or false",q:"In the third stanza, the poem shifts from describing the oak to describing the speaker.",opts:["True","False"],ans:0,why:"Stanzas 1 and 2 describe the oak. Stanza 3 begins with \"Now I am the one who trembles,\" so the focus turns to the speaker."},
+   {type:"mc",id:"t2m1",kind:"Multiple choice",q:"What does the speaker mean by \"borrow a little of its might\"?",opts:["The speaker wants to take the tree home","The speaker draws courage from the tree's strength","The speaker is angry at the tree","The speaker plans to climb the tree"],ans:1,why:"Might means strength. Leaning on the oak helps the speaker feel braver."},
+   {type:"mc",id:"t2m2",kind:"Multiple choice",q:"Which statement is the best theme of this poem?",opts:["Oak trees are very tall.","New schools are scary.","People can find strength in the natural world when life gets hard.","Winter is the hardest season."],ans:2,why:"A theme is a message about life. The first and fourth choices are facts or topics, and the second is only the situation."},
+   {type:"mc",id:"t2m3",kind:"Multiple choice",q:"Why did the poet most likely choose an oak instead of a flower?",opts:["Oaks are easier to rhyme with","An oak is old and sturdy, so it shows lasting strength through storms","Flowers do not grow near streets","Oaks are the most common tree"],ans:1,why:"The oak survives shouting storms and winter wind, which supports the theme of endurance."},
+   {type:"mc",id:"t2m4",kind:"Multiple choice",q:"Which line from the poem is the strongest evidence for the theme you chose?",opts:["The old oak stands at the end of our street","But I press my back against the bark and borrow a little of its might","Storms have shouted through its leaves","Now I am the one who trembles"],ans:1,why:"This line shows the speaker actually taking strength from the oak, which proves the theme."},
+   {type:"write",id:"t2w",prompt:"Explain how the line you chose proves the theme.",
+    fields:[{id:"t2w2",label:"How my evidence proves the theme",rows:3}]},
+   {type:"write",id:"t2x",challenge:true,prompt:"Challenge: Write a fourth stanza from the speaker's point of view one month later. Use one metaphor and the ABCB rhyme pattern. Show how the speaker has changed.",
+    fields:[{id:"t2x1",label:"My fourth stanza",rows:5}]}
+  ]},
+
+ {id:3,key:"main",icon:"🎯",short:"Main Idea",title:"Main Idea Hunter",
+  intro:"The main idea is what a text is mostly about. Details support it. Read the article, then sort and decide.",
+  blocks:[
+   {type:"passage",key:"bee"},
+   {type:"mc",id:"mim1",kind:"Multiple choice",q:"Which sentence best states the main idea of the article?",opts:["Honeybees live in hives.","Honeybees use a dance to tell other bees where to find food.","Scientists study insects.","Bees waggle for exactly one minute."],ans:1,why:"The whole article explains how the dance shares the location of food. The other choices are too small, too broad, or not in the text."},
+   {type:"mc",id:"mim2",kind:"Multiple choice",q:"Which detail best supports the main idea?",opts:["Honeycomb is made of wax.","Bees are black and yellow.","The longer she waggles, the farther away the flowers are.","Scientists like insects."],ans:2,why:"This detail shows how the dance carries information about where the food is."},
+   {type:"drag",id:"mid",cap:99,prompt:"Sort each statement: is it the main idea, a supporting detail, or not needed in a summary?",
+    zones:[{id:"m",label:"Main idea"},{id:"d",label:"Supporting detail"},{id:"x",label:"Not needed in a summary"}],
+    chips:[
+     {id:"c1",text:"Honeybees use a dance to share where food is found.",zone:"m"},
+     {id:"c2",text:"Longer waggles mean the flowers are farther away.",zone:"d"},
+     {id:"c3",text:"Other bees crowd around and feel the dance.",zone:"d"},
+     {id:"c4",text:"Honey is sweet and sticky.",zone:"x"},
+     {id:"c5",text:"Bees can fly straight to flowers they have never seen.",zone:"d"},
+     {id:"c6",text:"Many people are afraid of bee stings.",zone:"x"}]},
+   {type:"mc",id:"mit1",kind:"True or false",q:"A good summary includes every small detail from the article.",opts:["True","False"],ans:1,why:"A summary keeps the main idea and the most important details, in your own words."},
+   {type:"mc",id:"mim3",kind:"Multiple choice",q:"Which is the best one-sentence summary of the article?",opts:["Bees dance.","Honeybees do a waggle dance in the hive that shows other bees which way and how far to fly to find flowers.","Honeybees are insects that make honey and live in large hives.","I think bees are amazing animals."],ans:1,why:"A good summary is short but includes the main idea and key details. The others are too small, off topic, or an opinion."},
+   {type:"write",id:"miw",prompt:"Now write your own summary of the article in 2 to 3 sentences, in your own words.",
+    fields:[{id:"miw3",label:"My summary",rows:4}]}
+  ]},
+ {id:4,key:"infer",icon:"🕵️",short:"Inference",title:"Inference Investigator",
+  intro:"An inference is what you figure out from clues in the text plus what you already know. The author does not say it directly.",
+  blocks:[
+   {type:"passage",key:"scene"},
+   {type:"mc",id:"inf1",kind:"Multiple choice",q:"What can you infer about how Marcus feels about his project?",opts:["He is proud and confident","He is nervous and unsure","He is bored","He is angry at Ms. Ortiz"],ans:1,why:"He chews his pencil, mumbles, and says it is only half done. These clues point to nerves."},
+   {type:"mc",id:"inf2",kind:"Multiple choice",q:"Which detail from the story best supports your inference?",opts:["His jacket hung over one arm.","He chewed the end of his pencil and mumbled that it was only half done.","The afternoon sun was warm.","Ms. Ortiz called his name."],ans:1,why:"Chewing a pencil and mumbling are signs of worry, and the half-done project explains why."},
+   {type:"drag",id:"infd",cap:99,prompt:"Drag each clue to the inference it supports.",
+    zones:[{id:"h",label:"Marcus is in a hurry to leave"},{id:"w",label:"Marcus is worried about his project"}],
+    chips:[
+     {id:"c1",text:"He slid his chair back before the final bell finished ringing",zone:"h"},
+     {id:"c2",text:"His backpack was already zipped and his jacket was on his arm",zone:"h"},
+     {id:"c3",text:"He chewed the end of his pencil",zone:"w"},
+     {id:"c4",text:"He mumbled, \"It's only half done\"",zone:"w"},
+     {id:"c5",text:"He slowly smoothed a crumpled paper flat",zone:"w"}]},
+   {type:"mc",id:"inf3",kind:"Multiple choice",q:"Dad walked into the kitchen. Flour covered the floor, and a trail of small white paw prints led under the table. What can you infer?",opts:["The dog got into the flour","Dad was baking bread","A storm came through","The floor was just cleaned"],ans:0,why:"Paw prints plus spilled flour plus what you know about dogs lead to this inference."},
+   {type:"mc",id:"inft1",kind:"True or false",q:"The story directly states that Marcus is nervous.",opts:["True","False"],ans:1,why:"The author never says it. You infer it from the clues."},
+   {type:"mc",id:"inf4",kind:"Multiple choice",q:"Which background knowledge helps you infer that chewing a pencil shows Marcus is nervous?",opts:["Pencils are made of wood","People often chew on things when they feel anxious","Students use pencils in science class","Pencils can be sharpened"],ans:1,why:"Inferences combine clues from the text with what you already know about people."},
+   {type:"write",id:"infw",prompt:"Make another inference about Marcus. Write your inference and the clue from the story that supports it.",
+    fields:[{id:"infw1",label:"My inference and my clue",rows:3}]}
+  ]},
+ {id:5,key:"science",icon:"🔬",short:"Scientist",title:"Be a Field Scientist",
+  intro:"What is it really like to be a research scientist? Read about a day in the life of Dr. Lena Park, then show what you understand.",
+  blocks:[
+   {type:"passage",key:"scientist"},
+   {type:"mc",id:"sc1",kind:"Multiple choice",q:"Which sentence best states the main idea of the article?",opts:["Otters are the smartest animals on Earth.","Being a field scientist takes patience, careful notes, and a willingness to be wrong.","Scientists should always wake up before sunrise.","Lena Park is the only person who studies otters."],ans:1,why:"Every paragraph shows a part of the job: waiting, recording, following rules, asking questions, and learning from mistakes."},
+   {type:"mc",id:"sc2",kind:"Multiple choice",q:"The article says, \"the otters do not care about her schedule.\" What can you infer from this?",opts:["Lena is rude to the otters","Lena has to fit her work around the animals, not the other way around","The otters are afraid of Lena","Lena does not like her job"],ans:1,why:"Wild animals live on their own time, so Lena gets up early and waits for them."},
+   {type:"mc",id:"sc3",kind:"Multiple choice",q:"Why does Lena stay far away from the otters?",opts:["She is afraid of them","Otters bite scientists","She wants the otters to act naturally so her notes are accurate","Her binoculars only work from far away"],ans:2,why:"If the otters notice her, they might change what they do, and her data would not be true to wild life."},
+   {type:"mc",id:"sc4",kind:"Multiple choice",q:"Why does the author begin with Lena waking at 4:30 a.m.?",opts:["To prove that mornings are better than evenings","To show what the daily life of a field scientist is really like","To make the reader feel sleepy","To explain how otters sleep"],ans:1,why:"The details of her morning put the reader right into a scientist's real routine."},
+   {type:"mc",id:"sct1",kind:"True or false",q:"Lena believes that a wrong idea is a total waste of time.",opts:["True","False"],ans:1,why:"She says a wrong answer still teaches you something, which is the best part of science."},
+   {type:"drag",id:"scd",cap:99,prompt:"Sort these actions into the skill each one shows.",
+    zones:[{id:"o",label:"Observing"},{id:"r",label:"Recording"},{id:"q",label:"Questioning and revising"}],
+    chips:[
+     {id:"c1",text:"Sits perfectly still for hours watching the otters",zone:"o"},
+     {id:"c2",text:"Stays far away so the otters act naturally",zone:"o"},
+     {id:"c3",text:"Writes down where the otters swim and what they eat",zone:"r"},
+     {id:"c4",text:"Types her notes in and compares them with last year's",zone:"r"},
+     {id:"c5",text:"Wonders, \"Was it a game, or was it a tool?\"",zone:"q"},
+     {id:"c6",text:"Starts over when her idea turns out to be wrong",zone:"q"}]},
+   {type:"poll",id:"scp",q:"Would you want to be a field scientist?",opts:["Yes, for sure","Maybe, it depends on what I study","Probably not"]},
+   {type:"write",id:"scw",challenge:true,prompt:"Challenge: Write a short field journal entry. What would you study, what would you observe, and what question would you ask?",
+    fields:[{id:"scw1",label:"My field journal entry",rows:5}]}
+  ]},
+ {id:6,key:"persuade",icon:"📣",short:"Persuade",title:"Persuasion Detective",
+  intro:"Ethos builds trust. Pathos stirs emotion. Logos uses facts and logic. Read both ads, then sort the clues.",
+  blocks:[
+   {type:"ads"},
+   {type:"drag",id:"t3d",cap:99,prompt:"Drag each clue to the appeal it uses.",
+    zones:[{id:"e",label:"Ethos: credibility and trust"},{id:"p",label:"Pathos: emotion"},{id:"l",label:"Logos: facts and logic"}],
+    chips:[
+     {id:"c1",text:"Ad A: chosen by the National Teachers Association",zone:"e"},
+     {id:"c2",text:"Ad A: Don't let your child start the school year with a broken strap",zone:"p"},
+     {id:"c3",text:"Ad A: tested to carry 40 pounds, with a 5-year guarantee",zone:"l"},
+     {id:"c4",text:"Ad B: Our licensed veterinarians have cared for local animals for 20 years",zone:"e"},
+     {id:"c5",text:"Ad B: Daisy waits by the door of her kennel, hoping tonight is the night",zone:"p"},
+     {id:"c6",text:"Ad B: Three out of four dogs are adopted within 30 days",zone:"l"}]},
+   {type:"mc",id:"t3t1",kind:"True or false",q:"Logos is the appeal that works mainly on a reader's emotions.",opts:["True","False"],ans:1,why:"Pathos works on emotions. Logos uses facts, numbers, and logic."},
+   {type:"mc",id:"t3m1",kind:"Multiple choice",q:"An ad says, \"Nine out of ten dentists recommend our toothpaste.\" Which appeals does it use?",opts:["Pathos only","Ethos and logos","Pathos and logos","No appeals"],ans:1,why:"Dentists are experts, which is ethos. Nine out of ten is a statistic, which is logos."},
+   {type:"mc",id:"t3m2",kind:"Multiple choice",q:"Which change would add the most pathos to Ad A?",opts:["List the exact weight of the backpack in grams","Add a story about a child excited for the first day of school with a bag that will not fail","Add the name of the company's founder","Move the guarantee to the top"],ans:1,why:"Pathos appeals to feelings. A short story about a child's big day stirs emotion."},
+   {type:"write",id:"t3w",prompt:"Which ad is more persuasive overall? Explain why its strongest appeal works for its audience.",
+    fields:[{id:"t3w2",label:"The more persuasive ad is... because... (at least two sentences)",rows:4}]}
+  ]},
+ {id:7,key:"write",icon:"✍️",short:"Write",title:"Evidence Paragraph",
+  intro:"First, build a model paragraph so you can see how strong writing is organized. Then plan and write your own using both texts.",
+  blocks:[
+   {type:"drag",id:"t4d",cap:1,prompt:"Put these four sentences in the best order to make a strong paragraph. Drag one into each slot.",
+    zones:[{id:"1",label:"Sentence 1"},{id:"2",label:"Sentence 2"},{id:"3",label:"Sentence 3"},{id:"4",label:"Sentence 4"}],
+    chips:[
+     {id:"c3",text:"This shows that quiet time helps students recharge, which means they can learn more in the classes that follow.",zone:"3"},
+     {id:"c1",text:"Our school should add a quiet reading hour each day.",zone:"1"},
+     {id:"c4",text:"A simple hour of silence could change how our whole school learns.",zone:"4"},
+     {id:"c2",text:"In a recent survey, 78 percent of students said they focus better after a calm break.",zone:"2"}],
+    after:"Notice the pattern: claim, then evidence, then reasoning, then a concluding insight. Use it in your own paragraph."},
+   {type:"mc",id:"t4m1",kind:"Multiple choice",q:"The claim is: \"Daisy's story shows that animals depend on people.\" Which sentence is the strongest reasoning?",opts:["Daisy is a dog.","This proves it.","Because Daisy waits for someone to take her home, the ad shows that animals depend on people for care, which is why visiting the shelter matters.","Many people like dogs."],ans:2,why:"Strong reasoning explains how the evidence connects to the claim instead of just repeating it."},
+   {type:"mc",id:"t4c",kind:"Multiple choice",q:"Planning step 1: Which claim best answers the prompt using both texts?",opts:["Trees are tall and animals are cute.","People and living things help each other: the speaker finds courage in the oak, and the shelter dog needs people's care.","Everyone should adopt a dog.","Winter is hard on trees."],ans:1,why:"A strong claim answers the prompt and can be proven with evidence from both texts."},
+   {type:"mc",id:"t4e1",kind:"Multiple choice",q:"Planning step 2: Which evidence from \"The Old Oak\" best supports that claim?",opts:["The old oak stands at the end of our street","Storms have shouted through its leaves","I press my back against the bark and borrow a little of its might","new school, new halls, no friend in sight"],ans:2,why:"This line shows the person gaining courage from the tree, which supports the claim."},
+   {type:"mc",id:"t4e2",kind:"Multiple choice",q:"Planning step 3: Which evidence from the Paws Haven ad best supports that claim?",opts:["Our licensed veterinarians have cared for local animals for 20 years","Every night, Daisy waits by the door of her kennel, hoping tonight is the night someone takes her home","Please come meet her","Three out of four dogs are adopted within 30 days"],ans:1,why:"Daisy waiting for someone to take her home shows an animal depending on people."},
+   {type:"write",id:"t4p",prompt:"Now write it. Use the claim and evidence you chose. Plan your reasoning, then write one paragraph.",
+    fields:[
+     {id:"t4p4",label:"My reasoning: how the evidence proves my claim",rows:3},
+     {id:"t4p5",label:"My paragraph (at least 6 sentences, with titles named and transition words)",rows:10,count:true}]}
+  ]},
+ {id:8,key:"wrap",icon:"⭐",short:"Wrap-up",title:"Exit Reflection",
+  intro:"Think about your work today. Answer honestly.",
+  blocks:[
+   {type:"poll",id:"t5p1",q:"Which stop was the hardest for you?",opts:["Word Roots","Poetry","Main Idea","Inference","Field Scientist","Persuasion","Evidence Paragraph"]},
+   {type:"poll",id:"t5p2",q:"What helped you most when you got stuck?",opts:["Rereading the text","Pressing the 🔊 button","Skipping and coming back","Using clues from the text"]},
+   {type:"write",id:"t5w",prompt:"Reflect on your learning.",
+    fields:[{id:"t5w2",label:"Which sentence in your paragraph are you proudest of, and why?",rows:3}]},
+   {type:"rate",id:"t5r",q:"How confident are you with figurative language and persuasive appeals?",labels:["1: Lost","2: Shaky","3: Pretty good","4: I could teach it"]},
+   {type:"text",title:"Finished early?",body:"Reread your paragraph. Find one sentence to make stronger and rewrite it in the box above. Then stay silent until the bell. If your sub says it is okay, you may work quietly on IXL or the vocabulary in your Canvas module with the sound off."}
+  ]}
+];
+
+function autoItems(t){return t.blocks.filter(function(b){return b.type==="mc"||b.type==="drag";});}
+function maxOf(b){return b.type==="mc"?1:b.chips.length;}
+function ptsOf(b){var st=S.items[b.id]||{};if(b.type==="mc")return st.pick===b.ans?1:0;return st.checked?(st.score||0):0;}
+function doneOf(b){var st=S.items[b.id]||{};return b.type==="mc"?st.pick!==undefined:!!st.checked;}
+function taskDone(t){return autoItems(t).every(doneOf);}
+
+/* ---------- speech ---------- */
+var hasTTS="speechSynthesis" in window&&"SpeechSynthesisUtterance" in window;
+var currentBtn=null,currentU=null;
+function clearReading(){if(currentBtn)currentBtn.classList.remove("reading");currentBtn=null;currentU=null;}
+function speak(text,btn){
+  if(!hasTTS)return;
+  var ss=window.speechSynthesis;
+  if(currentBtn&&currentBtn===btn&&ss.speaking){ss.cancel();clearReading();return;}
+  ss.cancel();clearReading();
+  var u=new SpeechSynthesisUtterance(String(text).replace(/_{2,}/g," blank "));
+  u.rate=parseFloat($("#rate").value)||0.9;
+  var vs=ss.getVoices()||[];
+  var v=vs.filter(function(x){return /^en[-_]US/i.test(x.lang);})[0]||vs.filter(function(x){return /^en/i.test(x.lang);})[0];
+  if(v){u.voice=v;u.lang=v.lang;}else{u.lang="en-US";}
+  currentU=u;currentBtn=btn||null;
+  if(btn)btn.classList.add("reading");
+  u.onend=u.onerror=function(){if(currentU===u)clearReading();};
+  ss.speak(u);
+}
+if(!hasTTS)document.body.classList.add("nospeech");
+if(hasTTS&&window.speechSynthesis.onvoiceschanged!==undefined){window.speechSynthesis.onvoiceschanged=function(){};}
+
+/* ---------- renderers ---------- */
+function stageEl(){return $("#stage");}
+
+function startHTML(){
+  var ttl="The Old Oak Trail".split(" ").map(function(w,wi){
+    return '<span class="w">'+w.split("").map(function(c,i){return '<span class="l" style="animation-delay:'+((wi*5+i)*0.05+0.1).toFixed(2)+'s">'+c+'</span>';}).join("")+'</span>';
+  }).join("");
+  var leaves=["🍂","🍁","🍃","🍂","🍁","🍂","🍃","🍁"].map(function(l,i){
+    return '<span class="leaf" aria-hidden="true" style="left:'+(6+i*12)+'%;animation-duration:'+(7+(i%4)*1.6)+'s;animation-delay:-'+(i*1.3)+'s">'+l+'</span>';
+  }).join("");
+  var emo=["🌳","📖","🎯"].map(function(e,i){return '<span style="animation-delay:'+(i*0.25)+'s">'+e+'</span>';}).join("");
+  return '<section class="hero front">'+leaves+'<span class="runner" aria-hidden="true">🐿️</span><div class="emo" aria-hidden="true">'+emo+'</div>'
+   +'<h1 class="ttl" aria-label="The Old Oak Trail"><span aria-hidden="true">'+ttl+'</span></h1>'
+   +'<p>Eight stops. Earn XP, unlock badges, and reach the top of the trail. Your teacher is out today, so you are the expert. Work quietly and on your own.</p>'
+   +'</section>'
+   +'<div class="card">'
+   +'<div class="lead"><p><strong>Step 1:</strong> type your name and class period. Your progress saves on this iPad as you go.</p>'+spk("Step 1. Type your name and class period. Your progress saves on this iPad as you go.")+'</div>'
+   +'<div class="hp">🎧 Put on your headphones <em>before</em> you press any 🔊 button, so the room stays quiet.</div>'
+   +'<div class="field"><label for="nm"><span>Your name</span></label><input type="text" id="nm" data-f="name" autocomplete="off" value="'+esc(S.name)+'"></div>'
+   +'<div class="field"><label for="pd"><span>Class period</span></label><input type="text" id="pd" data-f="period" autocomplete="off" value="'+esc(S.period)+'"></div>'
+   +'<div class="row"><button class="btn pulse" data-act="start" id="startBtn">'+(S.started?"Keep going":"Start the trail")+'</button><span class="hintline" id="startMsg"></span></div>'
+   +(S.started?'<p class="hintline">Your work is saved on this iPad. Press Keep going to pick up where you left off.</p>'
+     +(confirmFresh
+       ?'<div class="hp"><strong>Erase all saved work on this iPad?</strong> Only do this for a new student. This cannot be undone.</div><div class="row"><button class="btn" style="background:var(--c3);color:#1D1A3A;box-shadow:0 5px 0 var(--edge)" data-act="fresh-yes">Yes, erase it</button><button class="btn alt" data-act="fresh-no">Cancel</button></div>'
+       :'<div class="row"><button class="btn alt" data-act="fresh">Not me: new student</button></div>'):'')
+   +'</div>'
+   +'<div class="card"><h3>How to play</h3>'
+   +'<p><strong>🧲 Drag and drop:</strong> hold a card, slide it onto a box, and let go. You can also tap a card, then tap a box.</p>'
+   +'<p><strong>🔊 Read aloud:</strong> press the yellow speaker next to anything to hear it. Press it again to stop.</p>'
+   +'<p><strong>⭐ XP:</strong> every correct answer and every written response earns XP. Finish the trail to see your rank.</p>'
+   +'<p><strong>🎮 Bonus rounds:</strong> after each stop, play a quick game for extra XP. They are optional, and you can play the ones you skip at the end.</p>'
+   +'<p><strong>🧭 Stuck?</strong> Skip it and come back. Use the stops at the top to move around.</p></div>';
+}
+
+function refHTML(b){
+  var h='<div class="card"><h3>'+esc(b.title)+'</h3><table class="reftable"><thead><tr>';
+  b.head.forEach(function(x){h+='<th>'+esc(x)+'</th>';});
+  h+='<th></th></tr></thead><tbody>';
+  b.rows.forEach(function(r){
+    h+='<tr>'+r.map(function(c){return '<td>'+esc(c)+'</td>';}).join('')+'<td>'+spk(r[0]+" means "+r[1],"sm")+'</td></tr>';
+  });
+  return h+'</tbody></table></div>';
+}
+function poemHTML(){
+  var all=POEM.title+". "+POEM.stanzas.map(function(s){return s.join(" ");}).join(" ");
+  var h='<div class="card"><div class="lead"><p class="ptitle" style="margin:0;font-family:Fredoka,sans-serif;font-size:1.3rem;font-weight:600">'+esc(POEM.title)+'</p>'+spk(all)+'</div><div class="poem">';
+  POEM.stanzas.forEach(function(s){
+    h+='<div class="stanza"><p>'+s.map(esc).join('<br>')+'</p>'+spk(s.join(" "),"sm")+'</div>';
+  });
+  return h+'</div><p class="hintline">🔊 at the top reads the whole poem. Each small 🔊 reads one stanza.</p></div>';
+}
+function passageHTML(key){
+  var P=PASSAGES[key];
+  var all=P.title+". "+P.paras.join(" ");
+  var h='<div class="card"><div class="lead"><p class="ptitle" style="margin:0">'+esc(P.title)+'</p>'+spk(all)+'</div><div class="poem" style="font-style:normal">';
+  P.paras.forEach(function(t,i){
+    h+='<div class="stanza"><p>'+esc(t)+'</p>'+spk(t,"sm")+'</div>';
+  });
+  return h+'</div><p class="hintline">🔊 at the top reads it all. Each small 🔊 reads one paragraph.</p></div>';
+}
+function adsHTML(){
+  var h='<div class="adgrid">';
+  ADS.forEach(function(a){
+    h+='<div class="ad"><div class="lead"><h3 style="flex:1">'+esc(a.h)+'</h3>'+spk(a.h+". "+a.t,"sm")+'</div><p>'+esc(a.t)+'</p></div>';
+  });
+  return h+'</div>';
+}
+function textHTML(b){
+  return '<div class="card"><div class="lead"><div style="flex:1"><h3>'+esc(b.title)+'</h3><p>'+esc(b.body)+'</p></div>'+spk(b.title+". "+b.body)+'</div></div>';
+}
+
+function mcInner(b){
+  var st=S.items[b.id]||{};
+  var locked=st.pick!==undefined;
+  var h='<div class="q"><div class="qhead"><p class="qtext"><span class="tag">'+esc(b.kind)+'</span>'+esc(b.q)+'</p>'+spk(b.q+" "+b.opts.join(". "))+'</div><div class="opts">';
+  b.opts.forEach(function(o,i){
+    var cls="opt";
+    if(locked){if(i===b.ans)cls+=" right";else if(i===st.pick)cls+=" wrong";}
+    h+='<div class="orow"><button type="button" class="'+cls+'" data-act="mc" data-id="'+b.id+'" data-i="'+i+'"'+(locked?" disabled":"")+'>'+esc(o)+'</button>'+spk(o,"sm")+'</div>';
+  });
+  h+='</div>';
+  if(locked){
+    var ok=st.pick===b.ans;
+    var ch=cheer(b.id,ok);var msg=ch+" "+b.why;
+    h+='<div class="fb '+(ok?"ok":"no")+'"><p><span class="cheer">'+esc(ch)+'</span>'+esc(b.why)+'</p>'+spk(msg,"sm")+'</div>';
+  }
+  return h+'</div>';
+}
+
+function chipHTML(b,c,st){
+  var cls="chip";
+  if(st.checked&&st.place[c.id]&&st.place[c.id]!=="pool"){cls+=(st.place[c.id]===c.zone?" ok":" bad");}
+  if(sel&&sel.item===b.id&&sel.chip===c.id)cls+=" sel";
+  return '<div class="'+cls+'" data-chip="'+c.id+'" data-item="'+b.id+'" tabindex="0" role="button" aria-label="Card: '+esc(c.text)+'"><span>'+esc(c.text)+'</span>'+spk(c.text,"sm")+'</div>';
+}
+function dragInner(b){
+  var st=S.items[b.id];
+  if(!st){st=S.items[b.id]={place:{},checked:false,score:0};}
+  var h='<div class="q"><div class="qhead"><p class="qtext"><span class="tag">Drag and drop</span>'+esc(b.prompt)+'</p>'+spk(b.prompt)+'</div>';
+  var poolChips=b.chips.filter(function(c){return !st.place[c.id]||st.place[c.id]==="pool";});
+  h+='<div class="pool" data-zone="pool" data-item="'+b.id+'">'+poolChips.map(function(c){return chipHTML(b,c,st);}).join('')+(poolChips.length?'':'<span class="hintline">All cards placed.</span>')+'</div>';
+  h+='<div class="zones">';
+  b.zones.forEach(function(z){
+    var inZ=b.chips.filter(function(c){return st.place[c.id]===z.id;});
+    h+='<div class="zone" data-zone="'+z.id+'" data-item="'+b.id+'"><div class="zlabel"><span>'+esc(z.label)+'</span>'+spk(z.label,"sm")+'</div><div class="zdrop">'+inZ.map(function(c){return chipHTML(b,c,st);}).join('')+'</div></div>';
+  });
+  h+='</div>';
+  var allPlaced=b.chips.every(function(c){return st.place[c.id]&&st.place[c.id]!=="pool";});
+  h+='<div class="row"><button class="btn" data-act="check" data-id="'+b.id+'"'+(allPlaced?"":" disabled")+'>Check my answers</button><button class="btn alt" data-act="reset" data-id="'+b.id+'">Start over</button>';
+  if(st.checked){
+    var msg=st.score+" of "+b.chips.length+" correct."+(st.score<b.chips.length?" Move the red cards and check again.":" Great work!");
+    h+='<span class="result">'+esc(msg)+'</span>'+spk(msg,"sm");
+  }else if(!allPlaced){h+='<span class="hintline">Place every card to check.</span>';}
+  h+='</div>';
+  if(st.checked&&st.score===b.chips.length&&b.after){h+='<div class="fb ok"><p>'+esc(b.after)+'</p>'+spk(b.after,"sm")+'</div>';}
+  return h+'</div>';
+}
+
+function fieldHTML(f){
+  var v=S.writes[f.id]||"";
+  var h='<div class="field"><label for="'+f.id+'"><span>'+esc(f.label)+'</span>'+spk(f.label,"sm")+'</label>';
+  if(f.rows===1){h+='<input type="text" id="'+f.id+'" data-w="'+f.id+'" autocomplete="off" value="'+esc(v)+'">';}
+  else{h+='<textarea id="'+f.id+'" data-w="'+f.id+'" rows="'+f.rows+'">'+esc(v)+'</textarea>';}
+  if(f.count)h+='<div class="count" id="c_'+f.id+'">'+words(v)+' words</div>';
+  return h+'</div>';
+}
+function writeInner(b){
+  var h='<div class="q"><div class="qhead"><p class="qtext">'+(b.challenge?'<span class="badge">Challenge</span>':'<span class="badge">Written response</span>')+esc(b.prompt)+'</p>'+spk(b.prompt)+'</div>';
+  b.fields.forEach(function(f){h+=fieldHTML(f);});
+  return h+'</div>';
+}
+function pollInner(b){
+  var cur=S.writes[b.id];
+  var h='<div class="q"><div class="qhead"><p class="qtext"><span class="tag">Your choice</span>'+esc(b.q)+'</p>'+spk(b.q+" "+b.opts.join(". "))+'</div><div class="opts">';
+  b.opts.forEach(function(o,i){h+='<div class="orow"><button type="button" class="opt'+(String(i)===String(cur)?" on":"")+'" data-act="poll" data-id="'+b.id+'" data-i="'+i+'">'+esc(o)+'</button>'+spk(o,"sm")+'</div>';});
+  return h+'</div></div>';
+}
+function rateInner(b){
+  var cur=S.writes[b.id]||"";
+  var h='<div class="q"><div class="qhead"><p class="qtext">'+esc(b.q)+'</p>'+spk(b.q+" "+b.labels.join(". "))+'</div><div class="rate">';
+  b.labels.forEach(function(l,i){h+='<button type="button" class="'+(String(i+1)===String(cur)?"on":"")+'" data-act="rate" data-id="'+b.id+'" data-i="'+(i+1)+'">'+esc(l)+'</button>';});
+  return h+'</div></div>';
+}
+
+function taskHTML(t){
+  var h='<div class="tk" style="--tc:var(--c'+t.id+')">'
+    +'<div class="banner"><span class="bigic" aria-hidden="true">'+t.icon+'</span><h2>Stop '+t.id+': '+esc(t.title)+'</h2></div>'
+    +'<div class="card"><div class="lead"><p>'+esc(t.intro)+'</p>'+spk("Stop "+t.id+". "+t.title+". "+t.intro)+'</div><div class="hp">🎧 Headphones on before you press 🔊.</div></div>';
+  var group="";
+  function flush(){if(group){h+='<div class="card">'+group+'</div>';group="";}}
+  t.blocks.forEach(function(b){
+    if(b.type==="ref"){flush();h+=refHTML(b);}
+    else if(b.type==="poem"){flush();h+=poemHTML();}
+    else if(b.type==="passage"){flush();h+=passageHTML(b.key);}
+    else if(b.type==="ads"){flush();h+=adsHTML();}
+    else if(b.type==="text"){flush();h+=textHTML(b);}
+    else if(b.type==="mc"){group+=mcInner(b);}
+    else if(b.type==="drag"){group+=dragInner(b);}
+    else if(b.type==="write"){group+=writeInner(b);}
+    else if(b.type==="rate"){group+=rateInner(b);}
+    else if(b.type==="poll"){group+=pollInner(b);}
+  });
+  flush();
+  return h+'</div>';
+}
+
+/* ---------- results ---------- */
+function scoreSummary(){
+  var tot=0,max=0,rows=[];
+  TASKS.forEach(function(t){
+    var p=0,m=0;
+    autoItems(t).forEach(function(b){p+=ptsOf(b);m+=maxOf(b);});
+    tot+=p;max+=m;
+    if(m)rows.push({t:t,p:p,m:m});
+  });
+  return {tot:tot,max:max,rows:rows};
+}
+function writtenList(){
+  var out=[];
+  TASKS.forEach(function(t){
+    t.blocks.forEach(function(b){
+      if(b.type==="write"){
+        b.fields.forEach(function(f){out.push({task:t.title,label:f.label,text:S.writes[f.id]||"",challenge:!!b.challenge});});
+      }else if(b.type==="poll"){
+        var pr=S.writes[b.id];out.push({task:t.title,label:b.q,text:(pr!==undefined&&pr!=="")?b.opts[parseInt(pr,10)]:"",challenge:false});
+      }else if(b.type==="rate"){
+        var r=S.writes[b.id];out.push({task:t.title,label:b.q,text:r?b.labels[r-1]:"",challenge:false});
+      }
+    });
+  });
+  return out;
+}
+function rankOf(pct){
+  if(pct>=90)return "Trail Legend 🏆";
+  if(pct>=75)return "Summit Explorer 🧭";
+  if(pct>=55)return "Trailblazer 🔥";
+  return "Rising Scout 🌱";
+}
+function medalsHTML(){
+  var defs=[
+    {n:"Root Master",i:"🌱",c:"var(--c1)",ok:fullTask("roots")},
+    {n:"Poetry Pro",i:"🌳",c:"var(--c2)",ok:fullTask("poem")},
+    {n:"Main Idea Hunter",i:"🎯",c:"var(--c3)",ok:fullTask("main")},
+    {n:"Inference Ace",i:"🕵️",c:"var(--c6)",ok:fullTask("infer")},
+    {n:"Field Scientist",i:"🔬",c:"var(--c8)",ok:fullTask("science")},
+    {n:"Game Champ",i:"🎮",c:"var(--c1)",ok:bonusTotal()>=400},
+    {n:"Persuasion Detective",i:"🔎",c:"var(--c7)",ok:fullTask("persuade")},
+    {n:"Paragraph Architect",i:"🏗️",c:"var(--c4)",ok:fullTask("write")},
+    {n:"Wordsmith",i:"✍️",c:"var(--c5)",ok:allWritten()},
+    {n:"Challenge Accepted",i:"🚀",c:"var(--c3)",ok:anyChallenge()}
+  ];
+  return '<div class="medals">'+defs.map(function(d){
+    return '<div class="medal'+(d.ok?'':' off')+'"'+(d.ok?' style="background:'+d.c+'"':'')+'><span aria-hidden="true">'+(d.ok?d.i:'🔒')+'</span>'+esc(d.n)+'</div>';
+  }).join('')+'</div>';
+}
+function fullTask(key){
+  var t=TASKS.filter(function(k){return k.key===key;})[0],p=0,m=0;
+  autoItems(t).forEach(function(b){p+=ptsOf(b);m+=maxOf(b);});
+  return m>0&&p===m;
+}
+function allWritten(){
+  var ok=true,any=false;
+  TASKS.forEach(function(t){t.blocks.forEach(function(b){if(b.type==="write"&&!b.challenge){b.fields.forEach(function(f){any=true;if(words(S.writes[f.id])<2)ok=false;});}});});
+  return any&&ok;
+}
+function anyChallenge(){
+  var yes=false;
+  TASKS.forEach(function(t){t.blocks.forEach(function(b){if(b.type==="write"&&b.challenge){b.fields.forEach(function(f){if(words(S.writes[f.id])>=3)yes=true;});}});});
+  return yes;
+}
+function resultsHTML(){
+  var sc=scoreSummary();
+  var pct=sc.max?Math.round(sc.tot/sc.max*100):0;
+  var h='<section class="hero" style="background:var(--c5)"><div class="emo" aria-hidden="true">🏆 ⭐ 🎉</div><h1>Trail complete, '+esc(S.name||"explorer")+'!</h1><p>Class period: '+esc(S.period||"not entered")+'</p></section>'
+    +'<div class="card"><div class="lead"><div style="flex:1"><div class="big">'+sc.tot+' / '+sc.max+'</div><p style="margin:6px 0 0">auto-scored points ('+pct+'%). Your teacher will score your written responses.</p><p class="rank" style="margin:8px 0 0">Your rank: '+esc(rankOf(pct))+'</p></div>'+spk("You earned "+sc.tot+" out of "+sc.max+" points on the checked questions. Your rank is "+rankOf(pct).replace(/[^\w\s]/g,"")+". Your teacher will score your written responses.")+'</div>'
+    +'<table class="rtable">'+sc.rows.map(function(r){return '<tr><td>Stop '+r.t.id+': '+esc(r.t.title)+'</td><td>'+r.p+' / '+r.m+'</td></tr>';}).join('')+'</table></div>';
+  h+='<div class="card"><h3>Badges</h3>'+medalsHTML()+'</div>';
+  h+='<div class="card"><h3>Bonus rounds: '+bonusTotal()+' points</h3><table class="rtable">';
+  TASKS.forEach(function(t,i){
+    var g=GAMES[t.key],r=(S.games||{})[t.key];
+    h+='<tr class="brow"><td>'+esc(g.title)+'</td><td>'+(r&&r.best?r.best+' pts':'not played')+'</td><td><button class="btn alt noprint" style="min-height:42px;padding:2px 14px" data-act="gopen" data-i="'+i+'">'+(r&&r.best?'Play again':'Play')+'</button></td></tr>';
+  });
+  h+='</table></div>';
+  h+='<div class="card noprint"><h3>Turn it in</h3><p>Press <strong>Copy my results</strong> and paste them into the Canvas assignment, or take a screenshot of this page. Then stay quiet until the bell.</p>'
+    +'<div class="row"><button class="btn" data-act="copy">Copy my results</button><button class="btn alt" data-act="print">Print or save as PDF</button><span class="hintline" id="copyMsg"></span></div>'
+    +'<textarea id="copyBox" rows="6" style="display:none" readonly aria-label="Your results"></textarea></div>';
+  h+='<div class="card"><h3>My written answers</h3>';
+  var lastTask="";
+  writtenList().forEach(function(w){
+    if(w.task!==lastTask){h+='<p><strong>'+esc(w.task)+'</strong></p>';lastTask=w.task;}
+    h+='<div><em>'+esc(w.label)+'</em></div><div class="answer">'+(w.text?esc(w.text):'<span class="hintline">(blank)</span>')+'</div>';
+  });
+  return h+'</div>';
+}
+function resultsText(){
+  var sc=scoreSummary();
+  var t="Name: "+S.name+"\nPeriod: "+S.period+"\nAuto-scored points: "+sc.tot+" / "+sc.max+"\n";
+  sc.rows.forEach(function(r){t+="  Stop "+r.t.id+" "+r.t.title+": "+r.p+" / "+r.m+"\n";});
+  t+="Bonus game points: "+bonusTotal()+"\n";
+  t+="\nWRITTEN RESPONSES\n";
+  var last="";
+  writtenList().forEach(function(w){
+    if(w.task!==last){t+="\n== "+w.task+" ==\n";last=w.task;}
+    t+=w.label+"\n"+(w.text||"(blank)")+"\n\n";
+  });
+  return t;
+}
+
+/* ---------- chrome ---------- */
+function trailHTML(){
+  var h='';
+  h+='<li><button class="stop'+(S.task===-1?' here':'')+'" style="--tc:var(--card)" data-act="goto" data-i="-1"><span class="ic">🏁</span>Start</button></li>';
+  TASKS.forEach(function(t,i){
+    var locked=!S.started;
+    var cls="stop"+(S.task===i?" here":"")+(S.started&&taskDone(t)&&S.task!==i&&i<S.task?" done":"");
+    h+='<li><button class="'+cls+'" style="--tc:var(--c'+t.id+')" data-act="goto" data-i="'+i+'"'+(locked?" disabled":"")+'><span class="ic">'+t.icon+'</span>'+esc(t.short)+'</button></li>';
+  });
+  h+='<li><button class="stop'+(S.task>=TASKS.length?' here':'')+'" style="--tc:var(--c5)" data-act="goto" data-i="'+TASKS.length+'"'+(S.started?"":" disabled")+'><span class="ic">🏆</span>Results</button></li>';
+  return h;
+}
+function xpNow(){
+  var sc=scoreSummary(),n=sc.tot*10;
+  Object.keys(S.writes).forEach(function(k){if(words(S.writes[k])>=3)n+=5;});
+  return n+bonusTotal();
+}
+function updateChrome(){
+  var x=$("#xpn");if(x)x.textContent=xpNow();
+  $("#xp").hidden=!S.started;
+  $("#saved").hidden=!S.started;
+  var f=$("#progfill");
+  if(f){var frac=S.task<0?0:Math.min(1,(S.task+0.15)/TASKS.length);f.style.width=Math.round(frac*100)+"%";}
+}
+var CHEER_OK=["Nailed it!","Boom!","Great thinking!","You got it!","Sharp!","Yes!"];
+var CHEER_NO=["Close!","Almost!","Good try!","Not this time."];
+function cheer(id,ok){
+  var n=0;for(var i=0;i<id.length;i++)n+=id.charCodeAt(i);
+  var a=ok?CHEER_OK:CHEER_NO;return a[n%a.length];
+}
+function burst(){
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  var cols=["#7ED957","#4DB6FF","#FF7A7A","#B496FF","#FFC83D"];
+  var cx=window.innerWidth/2,cy=window.innerHeight*0.35;
+  for(var i=0;i<28;i++){
+    var d=document.createElement("span");d.className="confetti";
+    d.style.left=cx+"px";d.style.top=cy+"px";d.style.background=cols[i%cols.length];
+    var ang=Math.random()*Math.PI*2,dist=90+Math.random()*190;
+    d.style.setProperty("--dx",Math.cos(ang)*dist+"px");
+    d.style.setProperty("--dy",(Math.sin(ang)*dist+90)+"px");
+    d.style.setProperty("--rot",(Math.random()*720-360)+"deg");
+    document.body.appendChild(d);
+    (function(el){setTimeout(function(){el.remove();},1200);})(d);
+  }
+}
+function render(keepScroll){
+  var y=window.scrollY;
+  $("#trail").innerHTML=trailHTML();
+  var st=stageEl();
+  if(inGame)st.innerHTML=gameScreen(inGame.i);
+  else if(S.task<0)st.innerHTML=startHTML();
+  else if(S.task>=TASKS.length)st.innerHTML=resultsHTML();
+  else st.innerHTML=taskHTML(TASKS[S.task]);
+  var bar=$("#bar");
+  bar.hidden=S.task<0||!!inGame;
+  if(S.task>=0){
+    $("#backBtn").textContent=S.task===0?"Back to start":"Back";
+    $("#backBtn").style.visibility=S.task>=TASKS.length?"visible":"visible";
+    $("#nextBtn").textContent=S.task>=TASKS.length?"Back to my work":(S.task===TASKS.length-1?"See my results":"Next stop");
+    $("#nextBtn").style.display="";
+  }
+  updateChrome();
+  if(keepScroll)window.scrollTo(0,y);
+}
+function go(i){
+  inGame=null;
+  if(hasTTS){window.speechSynthesis.cancel();clearReading();}
+  sel=null;S.task=i;save();render(false);window.scrollTo(0,0);
+}
+
+/* ---------- drag and drop ---------- */
+var sel=null,drag=null;
+function itemDef(id){
+  for(var i=0;i<TASKS.length;i++){var bs=TASKS[i].blocks;for(var j=0;j<bs.length;j++){if(bs[j].id===id)return bs[j];}}
+  return null;
+}
+function moveChip(itemId,chipId,zoneId){
+  var b=itemDef(itemId),st=S.items[itemId];
+  if(!b||!st)return;
+  if(zoneId!=="pool"){
+    var inZone=b.chips.filter(function(c){return st.place[c.id]===zoneId&&c.id!==chipId;});
+    if(b.cap&&inZone.length>=b.cap){inZone.forEach(function(c){st.place[c.id]="pool";});}
+  }
+  st.place[chipId]=zoneId;
+  st.checked=false;
+  sel=null;save();render(true);
+}
+function zoneAt(x,y,itemId){
+  var el=document.elementFromPoint(x,y);
+  var z=el&&el.closest?el.closest("[data-zone]"):null;
+  return (z&&z.dataset.item===itemId)?z:null;
+}
+function clearHot(){var hs=document.querySelectorAll(".hot");for(var i=0;i<hs.length;i++)hs[i].classList.remove("hot");}
+
+document.addEventListener("pointerdown",function(e){
+  var chip=e.target.closest&&e.target.closest(".chip");
+  if(!chip||e.target.closest(".spk"))return;
+  if(e.pointerType==="mouse"&&e.button!==0)return;
+  drag={chip:chip,item:chip.dataset.item,id:chip.dataset.chip,x:e.clientX,y:e.clientY,moved:false,ghost:null,pid:e.pointerId};
+  try{chip.setPointerCapture(e.pointerId);}catch(err){}
+});
+document.addEventListener("pointermove",function(e){
+  if(!drag||e.pointerId!==drag.pid)return;
+  var dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+  if(!drag.moved&&Math.sqrt(dx*dx+dy*dy)>8){
+    drag.moved=true;
+    var g=drag.chip.cloneNode(true);
+    g.classList.add("ghost");g.classList.remove("sel");
+    g.style.width=Math.min(drag.chip.offsetWidth,320)+"px";
+    var sp=g.querySelector(".spk");if(sp)sp.remove();
+    g.style.setProperty("--tc",getComputedStyle(drag.chip).getPropertyValue("--tc")||"#FFC83D");
+    document.body.appendChild(g);drag.ghost=g;
+    drag.chip.classList.add("dragging");
+  }
+  if(drag.moved){
+    e.preventDefault();
+    drag.ghost.style.left=e.clientX+"px";drag.ghost.style.top=e.clientY+"px";
+    clearHot();
+    var z=zoneAt(e.clientX,e.clientY,drag.item);
+    if(z)z.classList.add("hot");
+  }
+});
+function endDrag(e,cancel){
+  if(!drag||e.pointerId!==drag.pid)return;
+  var d=drag;drag=null;
+  clearHot();
+  if(d.ghost)d.ghost.remove();
+  if(d.moved){
+    d.chip.classList.remove("dragging");
+    if(!cancel){
+      var z=zoneAt(e.clientX,e.clientY,d.item);
+      if(z)moveChip(d.item,d.id,z.dataset.zone);
+    }
+  }else if(!cancel){
+    if(sel&&sel.item===d.item&&sel.chip===d.id){sel=null;}
+    else{sel={item:d.item,chip:d.id};}
+    render(true);
+  }
+}
+document.addEventListener("pointerup",function(e){endDrag(e,false);});
+document.addEventListener("pointercancel",function(e){endDrag(e,true);});
+
+/* ---------- clicks ---------- */
+document.addEventListener("click",function(e){
+  var sp=e.target.closest&&e.target.closest(".spk");
+  if(sp){speak(sp.getAttribute("data-say"),sp);return;}
+  var gg=e.target.closest&&e.target.closest("[data-g]");
+  if(gg&&inGame&&inGame.running){ENG[inGame.cfg.mode].click(inGame,gg.getAttribute("data-g"),gg);return;}
+  var a=e.target.closest&&e.target.closest("[data-act]");
+  if(a){
+    var act=a.dataset.act;
+    if(act==="start"){
+      if(!S.name.trim()){var m=$("#startMsg");if(m)m.textContent="Type your name first.";var n=$("#nm");if(n)n.focus();return;}
+      if(!S.started)S.started=Date.now();
+      go(0);return;
+    }
+    if(act==="goto"){go(parseInt(a.dataset.i,10));return;}
+    if(act==="next"){
+      if(S.task>=TASKS.length){go(TASKS.length-1);return;}
+      var tk=TASKS[S.task];
+      if(tk&&GAMES[tk.key]&&!(S.games&&S.games[tk.key])){openGame(S.task);return;}
+      go(S.task+1);return;
+    }
+    if(act==="back"){go(S.task===0?-1:S.task-1);return;}
+    if(act==="mc"){
+      var id=a.dataset.id;
+      if(S.items[id]&&S.items[id].pick!==undefined)return;
+      var pk=parseInt(a.dataset.i,10);S.items[id]={pick:pk};save();render(true);if(pk===itemDef(id).ans)burst();return;
+    }
+    if(act==="check"){
+      var b=itemDef(a.dataset.id),st=S.items[b.id],n=0;
+      b.chips.forEach(function(c){if(st.place[c.id]===c.zone)n++;});
+      st.checked=true;st.score=n;sel=null;save();render(true);if(n===b.chips.length)burst();return;
+    }
+    if(act==="reset"){S.items[a.dataset.id]={place:{},checked:false,score:0};sel=null;save();render(true);return;}
+    if(act==="gplay"){startRun();return;}
+    if(act==="gskip"||act==="gcont"){leaveGame();return;}
+    if(act==="gopen"){openGame(parseInt(a.dataset.i,10),TASKS.length);return;}
+    if(act==="poll"){S.writes[a.dataset.id]=a.dataset.i;save();render(true);return;}
+    if(act==="rate"){S.writes[a.dataset.id]=a.dataset.i;save();render(true);return;}
+    if(act==="fresh"){confirmFresh=true;render(true);return;}
+    if(act==="fresh-no"){confirmFresh=false;render(true);return;}
+    if(act==="fresh-yes"){
+      confirmFresh=false;inGame=null;
+      try{localStorage.removeItem(KEY);}catch(err){}
+      try{if(idb)idb.transaction("s","readwrite").objectStore("s").delete(KEY);}catch(err){}
+      S={name:"",period:"",started:0,task:-1,items:{},writes:{},games:{}};
+      save();render(false);window.scrollTo(0,0);
+      return;
+    }
+    if(act==="print"){window.print();return;}
+    if(act==="copy"){
+      var txt=resultsText(),msg=$("#copyMsg"),box=$("#copyBox");
+      function fallback(){box.style.display="block";box.value=txt;box.focus();box.select();if(msg)msg.textContent="Press and hold the box, choose Select All, then Copy.";}
+      try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+          navigator.clipboard.writeText(txt).then(function(){if(msg)msg.textContent="Copied! Paste it into Canvas.";},fallback);
+        }else{fallback();}
+      }catch(err){fallback();}
+      return;
+    }
+    return;
+  }
+  /* tap-to-place: a chip is selected and a zone is tapped */
+  if(sel){
+    var z=e.target.closest&&e.target.closest("[data-zone]");
+    if(z&&z.dataset.item===sel.item&&!(e.target.closest&&e.target.closest(".chip"))){
+      moveChip(sel.item,sel.chip,z.dataset.zone);
+    }
+  }
+});
+/* keyboard: Enter/Space on a chip selects it */
+document.addEventListener("keydown",function(e){
+  if((e.key==="Enter"||e.key===" ")&&e.target.classList&&e.target.classList.contains("chip")){
+    e.preventDefault();
+    var c=e.target;
+    sel=(sel&&sel.chip===c.dataset.chip&&sel.item===c.dataset.item)?null:{item:c.dataset.item,chip:c.dataset.chip};
+    render(true);
+  }
+});
+
+/* ---------- inputs ---------- */
+document.addEventListener("input",function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.f){S[t.dataset.f]=t.value;save();return;}
+  if(t.dataset&&t.dataset.w){
+    S.writes[t.dataset.w]=t.value;save();updateChrome();
+    var c=document.getElementById("c_"+t.dataset.w);
+    if(c)c.textContent=words(t.value)+" words";
+  }
+});
+$("#rate").addEventListener("change",function(){if(hasTTS&&window.speechSynthesis.speaking){window.speechSynthesis.cancel();clearReading();}});
+
+/* ---------- bonus rounds ---------- */
+var inGame=null;
+var confirmFresh=false;
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function hearts(n,max){var h="";for(var i=0;i<max;i++)h+=(i<n?"❤️":"🖤");return h;}
+function bonusTotal(){var n=0,g=S.games||{};for(var k in g){n+=(g[k].best||0);}return n;}
+function later(G,ms,fn){setTimeout(function(){if(inGame===G&&G.running)fn();},ms);}
+function setScore(G,d){G.score+=d;var e=$("#gs");if(e)e.textContent=G.score;}
+function setInfo(h){var e=$("#gx");if(e)e.innerHTML=h;}
+
+var GAMES={
+ roots:{title:"Root Pop",mode:"bubble",
+  how:"Bubbles are floating up with words in them. Tap every bubble whose word has the root shown. A wrong pop costs a heart. You have 3 hearts.",
+  rounds:[
+   {ask:"has the root spect (to look)",good:["inspect","spectator","spectacle"],bad:["portable","dictate","autograph","biology","export"]},
+   {ask:"has the root port (to carry)",good:["transport","portable","import"],bad:["inspect","predict","paragraph","biome","spectator"]},
+   {ask:"has the root dict (to say)",good:["predict","dictionary","dictate"],bad:["telegraph","biography","transport","spectacle","biome"]},
+   {ask:"has the root graph (to write)",good:["autograph","paragraph","telegraph"],bad:["dictate","portable","spectator","biology","inspect"]}]},
+ poem:{title:"Figure It Out",mode:"sort",
+  how:"A line of writing appears. Tap the type of figurative language it uses. Get 3 in a row for a combo bonus.",
+  choices:["Simile","Metaphor","Personification","Hyperbole"],
+  items:[
+   {t:"The wind whispered secrets to the sleeping town.",a:"Personification"},
+   {t:"Her smile was as bright as a summer sunrise.",a:"Simile"},
+   {t:"The classroom was a zoo at lunchtime.",a:"Metaphor"},
+   {t:"The clouds danced across the sky.",a:"Personification"},
+   {t:"He ran like a cheetah chasing breakfast.",a:"Simile"},
+   {t:"Time is a thief that steals our days.",a:"Metaphor"},
+   {t:"My backpack weighs a ton.",a:"Hyperbole"},
+   {t:"The old car groaned and complained all the way uphill.",a:"Personification"},
+   {t:"I have told you a million times to clean your room.",a:"Hyperbole"},
+   {t:"Life is a roller coaster.",a:"Metaphor"}]},
+ main:{title:"Main Idea Monster",mode:"boss",boss:"👾",name:"The Main Idea Monster",
+  how:"Defeat the monster by finding the main idea of each short text. Each right answer hits it. Each wrong answer costs a heart. You have 3 hearts.",
+  qs:[
+   {q:"Octopuses can squeeze through tiny gaps because they have no bones. They can also change color to hide from predators. What is the main idea?",o:["Octopuses have body features that help them survive.","Octopuses live in the ocean.","Octopuses are the smartest animals.","Predators hunt octopuses."],a:0,why:"Both sentences show ways octopuses stay safe."},
+   {q:"Walking to school gives you exercise before class. It also saves money on gas and reduces air pollution. What is the main idea?",o:["Gas is expensive.","Walking to school has several benefits.","Exercise is hard.","Cars cause traffic."],a:1,why:"All the details show benefits of walking."},
+   {q:"The library has new computers and a quiet reading nook. It also hosts a free homework club every Tuesday. What is the main idea?",o:["The library is on Main Street.","Homework club is on Tuesday.","The library offers new resources for students.","Computers are better than books."],a:2,why:"Computers, the nook and the club are all new resources."},
+   {q:"A volcano forms when melted rock, called magma, rises through cracks in Earth's crust. Pressure builds until the magma bursts out as lava. What is the main idea?",o:["Lava is very hot.","Volcanoes form when magma rises and erupts.","Earth has a crust.","Magma is a kind of rock."],a:1,why:"The text explains how a volcano forms from start to finish."},
+   {q:"Sleep helps your body heal and your brain store memories. Students who sleep well also pay better attention. What is the main idea?",o:["Sleep is important for health and learning.","Memories are stored in the brain.","Students should go to bed at 8.","Attention is a skill."],a:0,why:"The details show how sleep helps your body and your learning."}]},
+ infer:{title:"Clue Match",mode:"memory",
+  how:"Flip two cards at a time. Match each clue with the inference it points to. Fewer misses means more points.",
+  pairs:[
+   {c:"Tara's eyes were red and she sniffled.",i:"Tara has been crying or is sick."},
+   {c:"Everyone cheered as Jo crossed the line, arms raised.",i:"Jo won the race."},
+   {c:"Dark clouds rolled in and people grabbed umbrellas.",i:"It is about to rain."},
+   {c:"Sam checked his phone every minute and tapped his foot.",i:"Sam is impatient and waiting for news."},
+   {c:"The lights were off and chairs were stacked on the tables.",i:"The restaurant is closed."},
+   {c:"Ben's shoes were muddy and his jersey was grass-stained.",i:"Ben played a sport outside."}]},
+ science:{title:"Lab Letters",mode:"scramble",
+  how:"Unscramble each science word. Tap the letters in order. Use the hint if you need it. First try earns the most points.",
+  words:[
+   {w:"OBSERVE",h:"To watch something carefully"},
+   {w:"RECORD",h:"To write down what you see"},
+   {w:"PATIENCE",h:"Staying calm while you wait"},
+   {w:"EVIDENCE",h:"Facts that support an idea"},
+   {w:"QUESTION",h:"What a scientist asks to start an investigation"},
+   {w:"RESEARCH",h:"Careful study to find answers"}]},
+ persuade:{title:"Appeal Pop",mode:"bubble",
+  how:"Bubbles are floating up with ad phrases in them. Tap every bubble that uses the appeal shown. A wrong pop costs a heart. You have 3 hearts.",
+  rounds:[
+   {ask:"uses ETHOS (credibility and trust)",good:["Trusted by doctors for 30 years","Approved by the Ocean Safety Board","Designed by former NASA engineers"],bad:["Imagine her sad eyes watching the door","Costs only $4 per month","Tested in 12 independent labs","Feel the joy of finishing first","Don't let another child go hungry"]},
+   {ask:"uses PATHOS (emotion)",good:["Imagine her sad eyes watching the door","Don't let another child go hungry","Feel the joy of finishing first"],bad:["Trusted by doctors for 30 years","Costs only $4 per month","Tested in 12 independent labs","Approved by the Ocean Safety Board","Lasts 3 times longer than the leading brand"]},
+   {ask:"uses LOGOS (facts and logic)",good:["Lasts 3 times longer than the leading brand","Costs only $4 per month","Tested in 12 independent labs"],bad:["Designed by former NASA engineers","Feel the joy of finishing first","Imagine her sad eyes watching the door","Trusted by doctors for 30 years","Don't let another child go hungry"]}]},
+ write:{title:"Claim, Evidence, Reasoning",mode:"sort",
+  how:"A sentence from a paragraph appears. Tap whether it is the claim, the evidence, or the reasoning. Get 3 in a row for a combo bonus.",
+  choices:["Claim","Evidence","Reasoning"],
+  items:[
+   {t:"Regular exercise improves how well students focus in class.",a:"Claim"},
+   {t:"In one study, students who exercised for 20 minutes before a test scored 12 percent higher on attention tasks.",a:"Evidence"},
+   {t:"This shows that movement helps the brain get ready to concentrate, which supports the idea that exercise improves focus.",a:"Reasoning"},
+   {t:"Libraries give students access to resources they may not have at home.",a:"Claim"},
+   {t:"A survey of 200 students found that 40 percent do not have a computer at home.",a:"Evidence"},
+   {t:"This shows that many students depend on the library for technology they cannot get anywhere else.",a:"Reasoning"},
+   {t:"Coding clubs help students build problem-solving skills.",a:"Claim"},
+   {t:"Students in a coding club solved 30 percent more logic puzzles than students who were not in the club.",a:"Evidence"},
+   {t:"This shows that practicing code teaches students to break big problems into smaller steps.",a:"Reasoning"}]},
+ wrap:{title:"Final Boss: The Dragon",mode:"boss",boss:"🐲",name:"The Trail Dragon",
+  how:"One last battle! Questions from every stop are coming. Each right answer hits the dragon. Each wrong answer costs a heart. You have 3 hearts.",
+  qs:[
+   {q:"The root dict means...",o:["to say","to look","to carry","to write"],a:0,why:"Dict means to say, as in predict and dictate."},
+   {q:"\"The wind whispered to the trees\" is an example of...",o:["Simile","Metaphor","Personification","Hyperbole"],a:2,why:"The wind is given a human action, whispering."},
+   {q:"An ad says, \"Trusted by doctors for 30 years.\" Which appeal is this?",o:["Pathos","Ethos","Logos","None"],a:1,why:"Doctors are experts, so it builds trust. That is ethos."},
+   {q:"A poem shows a tree that survives storm after storm. Which theme fits best?",o:["Trees are tall","Winter is cold","Strength helps us get through hard times","Storms are loud"],a:2,why:"A theme is a message about life, not just a topic."},
+   {q:"Kia grabbed her umbrella and checked the sky. What can you infer?",o:["It might rain","She is going to bed","It is snowing","She lost her keys"],a:0,why:"The clues plus what you know point to rain."},
+   {q:"Which sentence is a main idea?",o:["A bee has six legs.","Honeybees use a dance to share where food is.","The hive is warm.","Bees are yellow and black."],a:1,why:"The main idea covers the whole text, not one small detail."},
+   {q:"Why does a field scientist stay far from the animals she studies?",o:["She is scared","So the animals act naturally","Animals are noisy","Her notebook is small"],a:1,why:"If animals notice her, her notes would not show real wild behavior."},
+   {q:"In a strong paragraph, the reasoning...",o:["repeats the claim","explains how the evidence proves the claim","lists a new topic","is optional"],a:1,why:"Reasoning connects the evidence to the claim."}]}
+};
+
+function gameOf(i){return GAMES[TASKS[i].key];}
+function openGame(i,ret){
+  var t=TASKS[i];
+  inGame={i:i,key:t.key,cfg:GAMES[t.key],score:0,running:false,ret:ret};
+  if(hasTTS){window.speechSynthesis.cancel();clearReading();}
+  render(false);window.scrollTo(0,0);
+}
+function leaveGame(){
+  var G=inGame;if(!G)return;
+  S.games=S.games||{};
+  if(!S.games[G.key]){S.games[G.key]={best:0,skipped:true};save();}
+  G.running=false;
+  var to=(G.ret!==undefined)?G.ret:G.i+1;
+  go(to);
+}
+function gameScreen(i){
+  var t=TASKS[i],g=GAMES[t.key];
+  return '<div class="tk" style="--tc:var(--c'+t.id+')"><div class="banner"><span class="bigic" aria-hidden="true">🎮</span><h2>Bonus Round: '+esc(g.title)+'</h2></div>'
+   +'<div class="card"><div class="lead"><p>'+esc(g.how)+'</p>'+spk("Bonus round. "+g.title+". "+g.how)+'</div>'
+   +'<div class="gstats"><span>Bonus points: <b id="gs">0</b></span><span id="gx"></span></div>'
+   +'<div id="garea" class="garea"><p class="hintline" style="text-align:center">Ready? Press Play. 🎧 Headphones on before you press 🔊.</p></div>'
+   +'<div class="row" id="gbtns"><button class="btn" data-act="gplay">Play</button><button class="btn alt" data-act="gskip">Skip bonus round</button></div></div></div>';
+}
+function startRun(){
+  var G=inGame;if(!G)return;
+  G.score=0;G.running=true;G.lock=false;
+  setScore(G,0);setInfo("");
+  $("#gbtns").innerHTML="";
+  ENG[G.cfg.mode].start(G);
+}
+function finishGame(G,msg){
+  G.running=false;
+  S.games=S.games||{};
+  var prev=S.games[G.key]?(S.games[G.key].best||0):0;
+  S.games[G.key]={best:Math.max(prev,G.score)};
+  save();updateChrome();
+  var m=msg+" You earned "+G.score+" bonus points.";
+  $("#garea").innerHTML='<div class="gend"><div class="big">+'+G.score+'</div><p><strong>'+esc(msg)+'</strong></p><div style="display:flex;justify-content:center">'+spk(m)+'</div><p class="hintline">Your best for this round: '+S.games[G.key].best+' points.</p></div>';
+  $("#gbtns").innerHTML='<button class="btn go" data-act="gcont">Continue</button><button class="btn alt" data-act="gplay">Play again</button>';
+  burst();
+}
+
+var ENG={
+ bubble:{
+  start:function(G){
+    G.r=0;G.lives=3;G.streak=0;
+    var tot=0;G.cfg.rounds.forEach(function(R){tot+=R.good.length;});
+    G.pts=Math.floor(96/tot);
+    setInfo(hearts(G.lives,3));
+    this.round(G);
+  },
+  round:function(G){
+    var R=G.cfg.rounds[G.r];
+    G.left=R.good.length;
+    var items=shuffle(R.good.map(function(w){return {w:w,g:1};}).concat(R.bad.map(function(w){return {w:w,g:0};})));
+    var say="Tap every bubble that "+R.ask;
+    var h='<div class="gprompt"><span>Round '+(G.r+1)+' of '+G.cfg.rounds.length+': tap every bubble that <b>'+esc(R.ask)+'</b></span>'+spk(say,"sm")+'</div><div class="bubbles">';
+    items.forEach(function(it,i){h+='<button type="button" class="bubble b'+(i%5)+'" style="animation-delay:'+(i*0.25)+'s" data-g="pop" data-good="'+it.g+'">'+esc(it.w)+'</button>';});
+    $("#garea").innerHTML=h+'</div><div class="gfb" id="gfb"></div>';
+  },
+  click:function(G,act,el){
+    if(act!=="pop"||el.disabled||G.lock)return;
+    var good=el.getAttribute("data-good")==="1";
+    if(good){
+      el.classList.add("popped");el.disabled=true;
+      G.streak++;setScore(G,G.pts);G.left--;
+      if(G.left<=0){
+        G.lock=true;G.r++;
+        if(G.r>=G.cfg.rounds.length){
+          var bonus=(G.lives===3)?4:0;if(bonus)setScore(G,bonus);
+          later(G,500,function(){finishGame(G,G.lives===3?"Perfect run! No hearts lost.":"All rounds cleared!");});
+        }else{later(G,600,function(){G.lock=false;ENG.bubble.round(G);});}
+      }
+    }else{
+      el.classList.add("miss");el.disabled=true;G.streak=0;G.lives--;setInfo(hearts(G.lives,3));
+      var f=$("#gfb");if(f)f.textContent="Not that one. Check the target again.";
+      if(G.lives<=0){G.lock=true;later(G,700,function(){finishGame(G,"Out of hearts. Nice try!");});}
+    }
+  }
+ },
+ sort:{
+  start:function(G){
+    G.items=shuffle(G.cfg.items);G.n=G.items.length;G.i=0;G.streak=0;G.pts=Math.round(100/G.n);
+    this.show(G);
+  },
+  show:function(G){
+    var it=G.items[G.i];G.lock=false;
+    setInfo("Card "+(G.i+1)+" of "+G.n+" · Combo: "+G.streak);
+    var h='<div class="gcard"><span>'+esc(it.t)+'</span>'+spk(it.t,"sm")+'</div><div class="choices">';
+    G.cfg.choices.forEach(function(c,k){h+='<button type="button" class="c'+k+'" data-g="ch" data-c="'+esc(c)+'">'+esc(c)+'</button>';});
+    $("#garea").innerHTML=h+'</div><div class="gfb" id="gfb"></div>';
+  },
+  click:function(G,act,el){
+    if(act!=="ch"||G.lock)return;
+    G.lock=true;
+    var it=G.items[G.i],ok=el.getAttribute("data-c")===it.a,f=$("#gfb");
+    if(ok){
+      G.streak++;var add=G.pts+(G.streak>=3?2:0);setScore(G,add);
+      el.classList.add("rightc");f.textContent="✅ Correct! "+(G.streak>=3?"Combo bonus! ":"")+"+"+add;
+    }else{
+      G.streak=0;el.classList.add("wrongc");f.textContent="Not quite. It was "+it.a+".";
+    }
+    setInfo("Card "+(G.i+1)+" of "+G.n+" · Combo: "+G.streak);
+    later(G,ok?800:1500,function(){
+      G.i++;
+      if(G.i>=G.n)finishGame(G,"Round complete!");else ENG.sort.show(G);
+    });
+  }
+ },
+ boss:{
+  start:function(G){
+    G.n=G.cfg.qs.length;G.i=0;G.hp=G.n;G.hearts=3;G.pts=Math.round(100/G.n);
+    this.show(G);
+  },
+  show:function(G){
+    var q=G.cfg.qs[G.i];G.lock=false;
+    G.order=shuffle(q.o.map(function(_,i){return i;}));
+    setInfo(hearts(G.hearts,3));
+    var h='<div class="boss"><span class="bossic" aria-hidden="true">'+G.cfg.boss+'</span><div style="flex:1"><b>'+esc(G.cfg.name)+'</b><div class="hpbar"><div style="width:'+Math.round(G.hp/G.n*100)+'%"></div></div></div></div>'
+      +'<div class="qhead"><p class="qtext">'+esc(q.q)+'</p>'+spk(q.q+" "+q.o.join(". "))+'</div><div class="opts">';
+    G.order.forEach(function(oi){h+='<div class="orow"><button type="button" class="opt" data-g="ans" data-oi="'+oi+'">'+esc(q.o[oi])+'</button>'+spk(q.o[oi],"sm")+'</div>';});
+    $("#garea").innerHTML=h+'</div><div class="gfb" id="gfb"></div>';
+  },
+  click:function(G,act,el){
+    if(act!=="ans"||G.lock)return;
+    G.lock=true;
+    var q=G.cfg.qs[G.i],oi=parseInt(el.getAttribute("data-oi"),10),ok=(oi===q.a),f=$("#gfb");
+    var btns=document.querySelectorAll('#garea [data-g="ans"]');
+    for(var k=0;k<btns.length;k++){if(parseInt(btns[k].getAttribute("data-oi"),10)===q.a)btns[k].classList.add("right");btns[k].disabled=true;}
+    if(ok){
+      G.hp--;setScore(G,G.pts);f.textContent="💥 Direct hit! "+q.why;
+    }else{
+      el.classList.add("wrong");G.hearts--;setInfo(hearts(G.hearts,3));f.textContent="Ouch! "+q.why;
+    }
+    later(G,ok?1400:2200,function(){
+      if(G.hearts<=0){finishGame(G,"The boss got you this time. Great effort!");return;}
+      G.i++;
+      if(G.i>=G.n){finishGame(G,G.hp<=0?"Boss defeated!":"You made it through the battle!");}
+      else ENG.boss.show(G);
+    });
+  }
+ },
+ memory:{
+  start:function(G){
+    var cards=[];
+    G.cfg.pairs.forEach(function(p,i){cards.push({id:i,t:p.c,s:"down"});cards.push({id:i,t:p.i,s:"down"});});
+    G.cards=shuffle(cards);G.open=[];G.miss=0;G.matched=0;
+    setInfo("Misses: 0");
+    this.draw(G);
+  },
+  draw:function(G){
+    var h='<div class="mem">';
+    G.cards.forEach(function(c,i){
+      if(c.s==="down")h+='<button type="button" class="mcard" data-g="flip" data-i="'+i+'" aria-label="Face-down card">?</button>';
+      else h+='<div class="mcard '+c.s+'" data-g="flip" data-i="'+i+'"><span>'+esc(c.t)+'</span>'+spk(c.t,"sm")+'</div>';
+    });
+    $("#garea").innerHTML=h+'</div><div class="gfb" id="gfb"></div>';
+  },
+  click:function(G,act,el){
+    if(act!=="flip"||G.lock)return;
+    var i=parseInt(el.getAttribute("data-i"),10),c=G.cards[i];
+    if(c.s!=="down")return;
+    c.s="up";G.open.push(i);this.draw(G);
+    if(G.open.length===2){
+      G.lock=true;
+      var a=G.cards[G.open[0]],b=G.cards[G.open[1]];
+      if(a.id===b.id){
+        a.s="done";b.s="done";G.matched++;G.open=[];G.lock=false;this.draw(G);
+        $("#gfb").textContent="✅ Match!";
+        if(G.matched>=G.cfg.pairs.length){
+          G.score=0;setScore(G,Math.max(40,100-5*G.miss));
+          later(G,900,function(){finishGame(G,G.miss===0?"Perfect memory!":"All pairs matched!");});
+        }
+      }else{
+        G.miss++;setInfo("Misses: "+G.miss);
+        $("#gfb").textContent="Not a match. Remember where they are!";
+        later(G,1400,function(){a.s="down";b.s="down";G.open=[];G.lock=false;ENG.memory.draw(G);});
+      }
+    }
+  }
+ },
+ scramble:{
+  start:function(G){G.w=0;G.n=G.cfg.words.length;G.pts=Math.round(100/G.n);this.show(G);},
+  show:function(G){
+    var W=G.cfg.words[G.w];G.lock=false;G.tries=0;G.ans=[];
+    var letters=W.w.split("");
+    var sc=letters;var guard=0;
+    do{sc=shuffle(letters);guard++;}while(sc.join("")===W.w&&guard<20);
+    G.tiles=sc.map(function(l){return {l:l,used:false};});
+    setInfo("Word "+(G.w+1)+" of "+G.n);
+    this.draw(G);
+  },
+  draw:function(G){
+    var W=G.cfg.words[G.w];
+    var h='<div class="gprompt"><span>Hint: '+esc(W.h)+'</span>'+spk("Hint. "+W.h,"sm")+'</div><div class="slots">';
+    for(var i=0;i<W.w.length;i++){h+='<div class="slot">'+(G.ans[i]?esc(G.ans[i].l):"")+'</div>';}
+    h+='</div><div class="tiles">';
+    G.tiles.forEach(function(t,i){h+='<button type="button" class="tile" data-g="tile" data-i="'+i+'"'+(t.used?" disabled":"")+'>'+esc(t.l)+'</button>';});
+    h+='</div><div class="row" style="justify-content:center"><button type="button" class="btn alt" data-g="undo">Undo</button><button type="button" class="btn alt" data-g="clear">Clear</button></div><div class="gfb" id="gfb" style="text-align:center"></div>';
+    $("#garea").innerHTML=h;
+  },
+  click:function(G,act,el){
+    if(G.lock)return;
+    var W=G.cfg.words[G.w];
+    if(act==="undo"){var u=G.ans.pop();if(u)u.used=false;this.draw(G);return;}
+    if(act==="clear"){G.ans.forEach(function(t){t.used=false;});G.ans=[];this.draw(G);return;}
+    if(act!=="tile")return;
+    var t=G.tiles[parseInt(el.getAttribute("data-i"),10)];
+    if(!t||t.used)return;
+    t.used=true;G.ans.push(t);
+    if(G.ans.length<W.w.length){this.draw(G);return;}
+    var guess=G.ans.map(function(x){return x.l;}).join("");
+    if(guess===W.w){
+      G.lock=true;
+      var add=G.tries===0?G.pts:(G.tries===1?Math.round(G.pts*0.6):Math.round(G.pts*0.3));
+      setScore(G,add);this.draw(G);
+      $("#gfb").textContent="✅ "+W.w.charAt(0)+W.w.slice(1).toLowerCase()+"! +"+add;
+      later(G,1000,function(){G.w++;if(G.w>=G.n)finishGame(G,"All words unscrambled!");else ENG.scramble.show(G);});
+    }else{
+      G.tries++;
+      G.ans.forEach(function(x){x.used=false;});G.ans=[];
+      this.draw(G);
+      $("#gfb").textContent="Not quite. Try again!";
+      if(G.tries>=3){
+        G.lock=true;$("#gfb").textContent="The word was "+W.w.charAt(0)+W.w.slice(1).toLowerCase()+". On to the next one!";
+        later(G,1600,function(){G.w++;if(G.w>=G.n)finishGame(G,"Nice effort!");else ENG.scramble.show(G);});
+      }
+    }
+  }
+ }
+};
+
+/* ---------- boot ---------- */
+if(S.task>=0&&!S.started){S.task=-1;}
+render(false);
+bootStorage();
+})();
+</script>
+</body>
+</html>
